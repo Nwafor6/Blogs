@@ -1,0 +1,155 @@
+{% extends 'base.html'%}
+{% load static%}
+{%block content%}
+      <div class="container mainmargin">
+        <div class="row">
+          <div class="main col-sm-8">
+            <div class="single-post">
+              <h1 class="post-title">{{detil.headline}}</h1>
+              <div class="post-meta">
+                <div class="post-author"><i class="far fa-user-circle"></i> By Someone</div>
+                <div class="post-date"><i class="far fa-calendar-alt"></i> 02/09/2021</div>
+                <div class="post-comments"><i class="far fa-comment"></i> No Comments</div>
+              </div>
+
+              <p class="post-sub-title">{{detil.heading}}</p>
+{%if detil.pk  == 1%}<img src="{% static 'blogs/images/ASUU.jpg'%}" alt="">{%endif%}
+              <p class="text-gray">{{detil.content | slice:':703'|safe}}</p>
+                <h3>Lorem ipsum dolor sit amet consectetur.</h3>
+                <ul class="text-list">
+                  <li>Lorem ipsum dolor sit amet.</li>
+                  <li>Lorem ipsum dolor sit amet.</li>
+                  <li>Lorem ipsum dolor sit amet.</li>
+                  <li>Lorem ipsum dolor sit amet.</li>
+                </ul>
+                <p class="text-gray">{{detil.content | slice:'703:'|safe}}</p>
+                <blockquote class="blockquote d-flex">
+                  <div class="icon"><i class="fas fa-quote-right"></i></div>
+                  <div class="text">
+                  <p class="quote-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                  <p class="quote-author text-muted">Someone famous</p>
+                  </div>
+                </blockquote>
+                <p class="text-gray"> 
+              <div class="share">
+                <a class="fb" href=""><i class="fab fa-facebook-f"></i> FACEBOOK</a>
+                <a class="google" href=""> <i class="fab fa-google-plus-g"></i> GOOGLE+</a>
+                <a class="twit" href=""><i class="fab fa-twitter"></i> TWITTER</a>
+                <a class="link" href=""><i class="fab fa-linkedin-in"></i> LINKEDIN</a>
+                <a class="pin" href=""><i class="fab fa-pinterest-p"></i> PINTEREST</a>
+              </div>
+              <div class="navigation">
+                <a class="prew"><i class="fas fa-chevron-left"></i> PREVIOUS</a>
+                <a class="next">NEXT <i class="fas fa-chevron-right"></i></a>
+              </div>
+              <div class="line" >Leave a Comment</div>
+              <form id="commentForm" method='post'>
+                {% csrf_token%}
+                {{form.commenter}}<br>
+                {{form.body}}<br>
+                <!-- Message input -->
+                <!-- <div class="mb-3">
+                  <label class="form-label" for="comment">Leave a Comment</label>
+                  <textarea class="form-control" id="comment" type="text" placeholder="" style="height: 10rem;" data-sb-validations="required"></textarea>
+                  <div class="invalid-feedback" data-sb-feedback="message:required">Comment is required.</div>
+                </div> -->
+                <!-- Name input -->
+                <!-- <div class="mb-3">
+                  <input class="form-control" id="name" type="text" placeholder="Name *" data-sb-validations="required" />
+                  <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
+                </div> -->
+                <!-- Email address input -->
+                <!-- <div class="mb-3">
+                  <input class="form-control" id="emailAddress" type="email*" placeholder="Email Address *" data-sb-validations="required, email" />
+                  <div class="invalid-feedback" data-sb-feedback="emailAddress:required">Email Address is required.</div>
+                  <div class="invalid-feedback" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div>
+                </div> -->
+                <!-- Form submissions success message -->
+                <div class="d-none" id="submitSuccessMessage">
+                  <div class="text-center mb-3">Form submission successful!</div>
+                </div>
+                <!-- Form submissions error message -->
+                <div class="d-none" id="submitErrorMessage">
+                  <div class="text-center text-danger mb-3">Error sending message!</div>
+                </div>
+                <!-- Form submit button -->
+                <div class="d-grid">
+                  <button class="btn" id="submitButton" type="submit">Post Comment</button>
+                </div>
+              </form>Comments:{{count}}
+              <div class="form-control">
+                 {% for comment in comments%}
+              <a href="{% url 'blogs:update_detil' comment.pk %}">Edit comment</a>
+              @{{comment.commenter}}:&nbsp {{comment.body}} |<a href="{% url 'blogs:comment_reply' comment.pk%}">Reply</a> <br><br>{% endfor%}</div>
+            </div>
+          </div>
+          <div class="sidebar col-sm-4">
+            <div class="input-group input-group-sm mt-4">
+              <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+              <div class="input-group-append">
+                <span class="input-group-text color" id="inputGroup-sizing-sm"><i class="fas fa-search"></i></span>
+              </div>
+            </div>
+            <div class="recent-post">
+                  <h4>Recent Post</h4>
+                  <ul>
+                    <li>{% for post in post%}
+                        <div class="recent-post-thumb">
+                            <img src="img/about-helf-1.png" alt="" />
+                        </div>
+                        <div class="recent-post-content">
+                            <h5><a href="#">{{post.headline| slice:":25"}}</a></h5>
+                        </div>
+                        <div class="recent-post-meta">
+                            <h5><span class="time" ><i class="far fa-calendar-alt"></i>{{post.pub_date}}</span></h5>
+                            <span class="comment"><i class="far fa-comment"></i> </span>
+                        </div>
+                    </li>{% endfor%}
+                  
+                
+              </ul>
+              <a class="btn" href="{%url 'blogs:post'%}">See More</a>
+            </div>
+            <div class="sidebar-benefits-items pt-5">
+              <h4>Our Software is a Quick spending Solution for Generic</h4>
+              <div class="sidebar-benefits-item">
+                <div class="sidebar-benefits-item-title d-flex">
+                  <div class="icon"><img src="img/icon/Group 1802.svg" alt=""></div>
+                  <p class="title">Expand Your Reach</p>
+                </div>    
+                <div class="text-gray">
+                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</p>
+                </div>
+              </div>
+              <div class="sidebar-benefits-item">
+                <div class="sidebar-benefits-item-title d-flex">
+                  <div class="icon"><img src="img/icon/Group 1953.svg" alt=""></div>
+                  <p class="title">Higher Annulized Growth</p>
+                </div>     
+                <div class="text-gray">
+                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</p>
+                </div>
+              </div>
+              <div class="sidebar-benefits-item">
+                <div class="sidebar-benefits-item-title d-flex">
+                  <div class="icon"><img src="img/icon/Group 1954.svg" alt=""></div>
+                  <p class="title">Book Your Provider</p>
+                </div>
+                <div class="text-gray">
+                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</p>
+                </div>
+              </div>
+              <div class="sidebar-benefits-item">
+                <div class="sidebar-benefits-item-title d-flex">
+                  <div class="icon"><img src="img/icon/Group 1955.svg" alt=""></div>
+                  <p class="title">Book Your Provider</p>
+                </div>
+                <div class="text-gray">
+                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</p>
+                </div>
+              </div>  
+          </div>
+        </div>
+        </div>
+      </div>
+{%endblock%}

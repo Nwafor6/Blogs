@@ -1,0 +1,16 @@
+
+{% extends 'base.html'%}
+{% load static%}
+{%block content%}
+@{{detil.commenter}}..{{detil.body}}
+<form method="post">
+	{% csrf_token%}
+	{{form}}
+	 <div class="d-grid">
+	      <button class="btn" id="submitButton" type="submit">Post Comment</button>
+	   </div>
+	
+</form>
+
+
+{% endblock%}
