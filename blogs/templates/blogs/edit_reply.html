@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+{% load static%}
+{%block content%}
+{{edit_reply}}<br><br>
+<form method="post">
+	{% csrf_token%}
+	{{form}}
+	 <div class="d-grid">
+	      <button class="btn" id="submitButton" type="submit">Post Comment</button>
+	   </div>
+	
+</form>
+
+
+{% endblock%}

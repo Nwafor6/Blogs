@@ -80,7 +80,12 @@
               <div class="form-control">
                  {% for comment in comments%}
               <a href="{% url 'blogs:update_detil' comment.pk %}">Edit comment</a>
-              @{{comment.commenter}}:&nbsp {{comment.body}} |<a href="{% url 'blogs:comment_reply' comment.pk%}">Reply</a> <br><br>{% endfor%}</div>
+              @{{comment.commenter}}:&nbsp {{comment.body}} |<a href="{% url 'blogs:comment_reply' comment.pk%}">Reply</a>| <a href="{% url 'blogs:delete_comment' comment.pk%}">Delete</a>
+
+              <br><br>
+              {%empty%} Be the first to comment
+              {% endfor%}
+             </div>
             </div>
           </div>
           <div class="sidebar col-sm-4">

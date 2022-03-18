@@ -3,6 +3,11 @@
 {% load static%}
 {%block content%}
 @{{detil.commenter}}..{{detil.body}}
+<h4>Replies to {{detil.commenter}}'s Comment</h4>
+Number of replies:{{replycount}} <br>
+{% for reply in commentreply%}
+@{{reply.commenter}}...{{reply.body}}<a href="{%url 'blogs:delete_reply' reply.pk%}">Delete</a>|<a href="{%url 'blogs:update_reply' reply.pk%}">Edit Reply</a> <br>
+{% endfor%}
 <form method="post">
 	{% csrf_token%}
 	{{form}}

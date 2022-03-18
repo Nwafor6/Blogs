@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,  get_object_or_404
 from .models import User, Article, Comment,CommentReply
 from .forms import CommentForm, ReplyForm
 from django.http import HttpResponseRedirect
@@ -61,19 +61,55 @@ def replycomment(request, pk):
 			new_reply=form.save(commit=False)
 			new_reply.detil=detil
 			new_reply.save()
-
+			return HttpResponseRedirect(reverse('blogs:post_detil', args=[str(detil.pk)]))
 	else:
 		form=ReplyForm()
-	context={'detil':detil, 'commentreply':commentreply,'new_reply':new_reply, 'form':form}
+	replycount=commentreply.count()
+	context={'detil':detil, 'commentreply':commentreply,'new_reply':new_reply, 'form':form, 'replycount':replycount}
 	return render(request, 'blogs/comment_reply.html', context)
 
+
+
+def deletecomment(request, pk):
+	comment = get_object_or_404(Comment, pk=pk)
+	post= comment.detil
+	if request.method =='POST':
+		comment.delete()
+		return HttpResponseRedirect(reverse('blogs:post_detil', args=[post.pk, ]))
+	context={'obj':comment}
+	return render (request, 'blogs/delete.html', context)
+
+
+
+def deletereply(request, pk):
+	del_reply=get_object_or_404(CommentReply, pk=pk)
+	post=del_reply.detil
+	if request.method=='POST':
+		del_reply.delete()
+		return HttpResponseRedirect(reverse('blogs:post_detil', args=[post.pk, ]))
+	context={'obj':del_reply}
+	return render (request, 'blogs/delete.html', context)
+
+
+# the update/edit reply view
+def updatereply(request, pk):
+	edit_reply=get_object_or_404(CommentReply, pk=pk)
+	post=edit_reply.detil
+	form=ReplyForm(instance=edit_reply)
+	if request.method=='POST':
+		form=ReplyForm(request.POST,instance=edit_reply)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(redirect('blogs:post_detil', args=[post.pk,]))
+	context={'form': form, 'edit_reply':edit_reply, 'post':post}
+	return render(request, 'blogs/edit_reply.html', context)
 
 
 
 
 def about (request):
 
-	return render(request, "blogs/about.html/detil")
+	return render(request, "blogs/about.html")
 
 
 
