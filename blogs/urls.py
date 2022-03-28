@@ -3,6 +3,9 @@ from django.urls import path
 app_name = 'blogs'
 urlpatterns = [
     
+    path('login/', views.loginPage, name='login'),
+    path('logout/', views.logoutUser, name='logout'),
+    path('register/', views.registerPage, name='register'),
 
     path('', views.post, name='post'),
     path('about/', views.about, name='about'),

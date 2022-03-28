@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'blogs.apps.BlogsConfig',
 ]
 
@@ -125,6 +126,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS =[
     BASE_DIR / 'static'
 ]
+CRISPY_TEMPLATE_PACK='bootstrap4'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

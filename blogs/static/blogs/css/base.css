@@ -1,0 +1,307 @@
+*{
+	font-family: 'Poppins', sans-serif;
+}
+
+
+.nav_footer{
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	grid-template-rows: 0.5fr  0.5fr;
+	grid-template-areas: 'nav nav nav' 'footer footer footer' 
+	/*height: 100vh;*/
+	/*gap: 0.5rem 1rem;*/
+}
+.nav{
+	display: flex;
+	justify-content: space-between;
+	grid-area: nav;
+	background: grey;
+	padding: .5rem;
+}
+.nav .links ul{
+	display: inline-flex;
+}
+.nav .links li{
+	list-style-type: none;
+	margin-right: 0.5rem;
+}
+.nav .links a{
+	text-decoration: none;
+	color: white;
+	font-size: 1rem;
+	font-family: sans-serif;
+	padding: 0.5rem;
+}
+
+.logo img {
+	max-width: 10em;
+}
+.footer{
+	text-align: center;
+	background: grey;
+	grid-area: footer;
+	margin-top: 3rem;
+}
+.footer h4{
+	color: white;
+
+
+}
+/*index page*/
+.indexpage{
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 0.5fr 1fr ;
+	grid-template-areas: 'header header header' ' headlines headlines scholar ' 'headlines headlines scholar ' 
+	/*gap: 0.5rem 1rem;*/
+
+}
+.header{
+	background: linear-gradient(rgba(4, 9, 30, 0.7),rgba(4, 9, 30, 0.7)), url(blackwoman.jpg) center no-repeat;
+	grid-area: header;
+	color: white;
+	height: 300px;
+	background-position: center;
+	background-size: cover;
+	text-align: center;
+}
+.header h1{
+	font-size: 41px;
+}
+.header a{
+	display:inline-block;
+	text-decoration: none;
+	color: #fff;
+	border: 1px solid;
+	font-size: 13px;
+	position: relative;
+	cursor: pointer;
+	padding: 6px;
+}
+.header a:hover{
+	border: 1px solid #f44336;
+	background: #f44336;
+	transition: 1s;
+}
+.scholar{
+	margin-top: 1rem;
+	grid-area: scholar;
+
+}
+.scholar h3{
+	border: 0.1rem solid black;
+	padding: 0.5rem 1rem;
+	background: lightblue;
+	border: none;
+	text-align: center;
+}
+.scholar ul{
+	background: #B0C4DE;
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+
+}
+.scholar ul li a{
+	text-decoration: none;
+	list-style-type: square;
+	/*color: #F8F8FF;*/
+
+
+}
+.headlines{
+	grid-area: headlines;
+	padding: 0.5rem 1rem;
+	/*border: 0.1rem solid black;*/
+	margin-top: 1rem;
+	margin-right: 3rem;
+}
+.headlines h3{
+	text-align: center;
+}
+.headlines h1 a{
+	text-decoration: none;
+}
+/*detile.html*/
+.article{
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: auto 1fr 1fr 1fr auto;
+	grid-template-areas: 'title title title' ' detil detil detil' ' detil detil detil' ' detil detil detil''scholar scholar scholar';
+	margin-bottom: 0;
+	border-bottom: 0;
+	background: #E6E6FA;
+
+}
+.title{
+	grid-area: title;
+	width: 100%;
+	/*height: 30%;*/
+	/*background: greenyellow;*/
+	text-align: center;
+}
+.para {
+	/*text-align: center;*/
+	margin-bottom: 2rem;
+	
+}
+.title p a{
+	border: 0.1rem solid grey;
+	padding: 10px;
+	background: lightblue;
+	text-decoration: none;
+	color: white;
+
+}
+.image {
+	text-align: center;
+}
+.image p img{
+
+	/*grid-area: image;*/
+	width: 50%;
+	/*border-radius: 2rem;*/
+	/*display: block;*/
+}
+.news_content {
+	text-align: center;
+}
+
+.comments {
+	text-align: center;
+}
+
+.comments-reply {
+	margin-left: 10rem;
+}
+
+.detil{
+	grid-area: detil;
+	padding: 20px;
+	/*background: purple;*/
+
+}
+.detil .author{
+	background: lightblue;
+	border-radius: 20px;
+	padding: 10px;
+}
+.detil .comments input{
+	border: none;
+	padding: 5px;
+	width: 7rem;
+	background: grey;
+	margin-bottom: 10px;
+}
+.comments-con{
+	/*display: flex;
+	justify-content: space-around;*/
+	border: 0.2rem solid grey;
+	padding: 20px;
+	/*text-align: center;*/
+	background: white;
+	margin-bottom: 5px;
+	border: none;
+	
+}
+.detil .comments-con .comments-reply{
+	/*border: 2px solid grey;*/
+	padding: 10px;
+	/*width: 40%;*/
+	/*margin-left: 6rem;*/
+}
+.detil .comments-con  a{
+	border: none;
+	padding: 5px;
+	width: 7rem;
+	background: grey;
+	margin-bottom: 10px;
+	text-decoration: none;
+	color: white;
+}
+
+
+.detil .comments-con a:hover{
+	background: #FF00FF;
+	transition: 1s;
+}
+/*.news_content{
+	width: 60%;
+}*/
+.detil .comments input:hover{
+	background: lightblue;
+}
+.scholar{
+	grid-area: scholar;
+	/*background: red;*/
+}
+.scholar h1{
+	text-align: center;
+}
+
+
+/*Login-register*/
+.log_reg{
+	background: linear-gradient(rgba(4, 9, 30, 0.7),rgba(4, 9, 30, 0.7)), url(blackwoman.jpg) center no-repeat;
+	color: #ffffff;
+	height: 100%;
+	background-position: center;
+	background-size: cover;
+
+}
+.login{
+	text-align: center;
+	padding: 20px;
+}
+.login a{
+	border: 0.1rem solid white;
+	padding: 5px;
+	color: white;
+	text-decoration: none;
+}
+.login a:hover{
+	background: pink;
+	transition: 1s;
+}
+.login .btn{
+	cursor: pointer;
+	border-radius: 12px;
+	border: none;
+
+}
+.login .btn:hover{
+	border: 1px solid #f44336;
+	background: pink;
+	transition: 1s;
+	border: none;
+	box-shadow: -0.5rem -0.5rem 1rem #444;
+}
+.register{
+	text-align: center;
+	padding: 20px;
+	cursor: pointer;
+}
+.register a{
+	border: 0.1rem solid white;
+	padding: 5px;
+	color: white;
+	text-decoration: none;
+}
+.register input{
+	border-radius: 12px;
+	border: none;
+}
+.register input:hover{
+	box-shadow: -0.5rem -0.5rem 1rem #444;
+	transition: 1s;
+	background: pink;
+	border: none;
+
+}
+.register a:hover{
+	border: 1px solid #f44336;
+	background: pink;
+	transition: 1s;
+	border: none;
+	box-shadow: -0.5rem -0.5rem 1rem #444;
+}

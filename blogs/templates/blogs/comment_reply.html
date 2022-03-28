@@ -1,21 +1,25 @@
 
 {% extends 'base.html'%}
 {% load static%}
+{% load crispy_forms_tags%}
 {%block content%}
-@{{detil.commenter}}..{{detil.body}}
-<h4>Replies to {{detil.commenter}}'s Comment</h4>
+@{{detil.user}}..{{detil.body}}
+<h5>Replies to {{detil.user}}'s Comment</h5>
 Number of replies:{{replycount}} <br>
 {% for reply in commentreply%}
-@{{reply.commenter}}...{{reply.body}}<a href="{%url 'blogs:delete_reply' reply.pk%}">Delete</a>|<a href="{%url 'blogs:update_reply' reply.pk%}">Edit Reply</a> <br>
+<p>@{{reply.user}}...{{reply.body}}</p>
+{% if request.user == reply.user%}
+<p><a href="{%url 'blogs:delete_reply' reply.pk%}">| Delete| </a><a href="{%url 'blogs:update_reply' reply.pk%}">| Edit Reply |</a> <br></p>
+{% endif%}
 {% endfor%}
 <form method="post">
 	{% csrf_token%}
-	{{form}}
+	{{form|crispy}}
 	 <div class="d-grid">
 	      <button class="btn" id="submitButton" type="submit">Post Comment</button>
 	   </div>
 	
 </form>
 
-
+							
 {% endblock%}
