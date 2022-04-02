@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,  get_object_or_404
-from .models import User, Article, Comment,CommentReply
-from .forms import CommentForm, ReplyForm
+from .models import User, Article, Comment,CommentReply, RoommateHelp
+from .forms import CommentForm, ReplyForm, RoommateHelpForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -24,7 +24,7 @@ def loginPage(request):
 		return redirect('blogs:post')
 
 	if request.method=='POST':
-		username=request.POST.get('username').lower()
+		username=request.POST.get('username')
 		password=request.POST.get('password')
 		try:
 			user=User.objects.get(username=username)
@@ -41,7 +41,7 @@ def loginPage(request):
 			messages.error(request, 'Username or password incorrect')
 
 	context={'page':page}
-	return render(request, 'blogs/login_register.html', context)
+	return render(request, 'blogs/login_register.html',context)
 
 
 def logoutUser(request):
@@ -66,7 +66,7 @@ def registerPage(request):
 		else:
 			messages.error(request,'')
 	context={ 'form':form}
-	return render(request, 'blogs/login_register.html', context)
+	return render(request, 'blogs/login_register.html',context)
 
 
 
@@ -80,56 +80,8 @@ def post(request):
 
 
 
-def email_check(User): 
-	return User.username.endswith('12g1')
-
-
-
-
-
-
-
-
-#Workng Perfectly
-# # @user_passes_test(email_check, login_url="blogs:login")
-# def post_detil (request, pk):
-# 	#get all Article from the database
-# 	post=Article.objects.all()
-# 	#query the data base of a certain Article us it id
-# 	detil=Article.objects.get(pk=pk)
-# 	#we want to introduce comments to each of the Articles
-# 	#the comments variable referes to comment already in the database
-# 	comments=detil.comments.all()
-# 	# comments=detil.comment_set.all()
-# 	#new comment  referes to the comment the user is just about to input
-# 	new_comment=None
-# 	if request.method == 'POST':
-# 		# user=request.POST.get('user.user')
-# 		# print('helloooooooo',user)
-# 		# if request.user.is_authenticated:
-# 		# 	user=authenticate(request, user= user)
-# 		# 	# print('yes good', user.username)
-# 		# else: return redirect('blogs:login')
-# 		# form=CommentForm(request.POST)
-# 		# if form.is_valid():
-# 		# 	print('hello')
-# 		# 	new_comment=form.save(commit=False)
-# 		# 	new_comment.detil= detil
-# 		# 	new_comment.save()
-# 		# # except: return HttpResponse ('Inavalid Username')
-# 		comment=Comment.objects.create(
-# 			user=request.user,
-# 			body=request.POST.get('body'),
-# 			)
-# 		return HttpResponseRedirect(reverse('blogs:post_detil', args=[str(detil.pk)]))
-# 	else:
-# 		form=CommentForm()
-# 	#count the number of comments 
-# 	count=comments.count()
-# 	context={'count':count, 'detil':detil, 'post':post, 'comments':comments, 'new_comment':new_comment, 'form':form}
-# 	return render(request, 'blogs/post_detil.html',context)
-
-
+# def email_check(User): 
+# 	return User.username.endswith('12g1')
 
 
 
@@ -158,6 +110,7 @@ def updatecomment(request, pk):
 
 
 #working perfectely
+@login_required(login_url='blogs:login')
 def replycomment(request, pk):
 	detil=get_object_or_404(Comment, pk=pk)
 	commentreply=detil.reply.all()
@@ -188,9 +141,6 @@ def replycomment(request, pk):
 def deletecomment(request, pk):
 	comment = get_object_or_404(Comment, pk=pk)
 	post= comment.detil
-	print('hello', comment.user)
-	# if request.user != post.reporter
-
 	if request.method =='POST':
 		comment.delete()
 		return HttpResponseRedirect(reverse('blogs:post_detil', args=[post.pk, ]))
@@ -265,5 +215,37 @@ def post_detil (request, pk):
 	#count the number of comments 
 	count=comments.count()
 	context={'count':count, 'detil':detil, 'post':post, 'comments':comments, 
-	'new_comment':new_comment, 'form':form}
+	'new_comment':new_comment, 'form':form, }
 	return render(request, 'blogs/post_detil.html',context)
+# EduBlog Help Section
+def roomMate(request):
+	roommate=RoommateHelp.objects.all()
+	form=RoommateHelpForm()
+	if request.method=='POST':
+		form=RoommateHelp.objects.create(
+			user=request.user,
+			message=request.POST.get('message')
+			)
+		return redirect('blogs:Edu-help')
+	context={'roommate':roommate, 'form':form}
+	return render( request, 'blogs/roommate-help.html', context)
+
+def roommateDelete(request, pk):
+	roommatepost=RoommateHelp.objects.get(pk=pk)
+	if request.method=='POST':
+		roommatepost.delete()
+		messages.success(request, 'Post deleted successful!!!')
+		return redirect('blogs:Edu-help')
+	context={'obj':roommatepost}
+	return render (request, 'blogs/delete.html',context)
+
+def editroommatePost(request, pk):
+	roommatepost=RoommateHelp.objects.get(pk=pk)
+	form=RoommateHelpForm(instance=roommatepost)
+	if request.method=='POST':
+		form=RoommateHelpForm(request.POST,instance=roommatepost)
+		if form.is_valid():
+			form.save()
+			return redirect('blogs:Edu-help')
+	context={'form':form}
+	return render(request, 'blogs/roommate-help.html', context)

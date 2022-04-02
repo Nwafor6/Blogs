@@ -2,13 +2,14 @@
 {% load static %}
 {% block content%}
 
-<form method="POST">
-	
-	{%csrf_token%}
-	<p> Are you sure you want to delete "{{obj}}"?</p>
-	<a href="{{request.META.HTTP_REFERER}}">Go back</a>
-	<input type="submit" value="Confirm">
+<div class="container" style="margin-bottom: 10px;">
+	<form method="POST">
+		
+		{%csrf_token%}
+		<p> Are you sure you want to delete "<span class="text-danger">{{obj}}</span>"?</p>
+		<a href="{{request.META.HTTP_REFERER}}" class="btn btn-primary btn-sm">Go back</a>
+		<input type="submit" value="Confirm" class="btn btn-primary btn-sm">
 
-</form>
-
+	</form>
+</div>
 {% endblock%}

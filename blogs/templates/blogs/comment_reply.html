@@ -3,23 +3,32 @@
 {% load static%}
 {% load crispy_forms_tags%}
 {%block content%}
-@{{detil.user}}..{{detil.body}}
-<h5>Replies to {{detil.user}}'s Comment</h5>
-Number of replies:{{replycount}} <br>
-{% for reply in commentreply%}
-<p>@{{reply.user}}...{{reply.body}}</p>
-{% if request.user == reply.user%}
-<p><a href="{%url 'blogs:delete_reply' reply.pk%}">| Delete| </a><a href="{%url 'blogs:update_reply' reply.pk%}">| Edit Reply |</a> <br></p>
-{% endif%}
-{% endfor%}
-<form method="post">
-	{% csrf_token%}
-	{{form|crispy}}
-	 <div class="d-grid">
-	      <button class="btn" id="submitButton" type="submit">Post Comment</button>
-	   </div>
-	
-</form>
+<div class="container-fluid">
+	<h3><span class="glyphicon glyphicon-user"></span>{{detil.user}}</h3>
+	<p>{{detil.body}}</p><hr>
+	<h4>Replies <span class="badge">{{replycount}}</span></h4>
+	<div class="jumbotron" style="width: 50%;">
+		{% for reply in commentreply%}
 
+				<h4><span class="glyphicon glyphicon-user"></span> {{reply.user}}</h4>
+				<p>{{reply.body}}</p>
+				{% if request.user == reply.user%}
+					<!-- <div  style="width:10%; margin-bottom: 10px;"> -->
+						  <a href="{%url 'blogs:update_reply' reply.pk%}" class="btn btn-primary">Edit Reply</a>
+						  <a href="{%url 'blogs:delete_reply' reply.pk%}" class="btn btn-primary">Delete</a>
+						  
+					<!-- </div> -->
+				{% endif%}
+
+		{% endfor%}
+	
+	</div>
+		<form method="post" style="width:50%; margin-bottom: 10px;">
+			{% csrf_token%}
+			{{form.as_body}}
+			<button class="btn btn-info btn-sm" id="submitButton" type="submit">Post Comment</button>
+		
+		</form>
+</div>
 							
 {% endblock%}

@@ -15,6 +15,9 @@ urlpatterns = [
     path('delete_comment/<str:pk>/', views.deletecomment, name='delete_comment'),
     path('delete_reply/<str:pk>/', views.deletereply, name='delete_reply'),
     path('update_reply/<str:pk>/', views.updatereply, name='update_reply'),
+    path('Edu-help/', views.roomMate, name='Edu-help'),
+    path('Edu-help-del/<str:pk>/', views.roommateDelete, name='Edu-help-del'),
+    path('Edu-help-edit/<str:pk>/', views.editroommatePost, name='Edu-help-edit'),
 
 
 

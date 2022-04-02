@@ -6,8 +6,9 @@
 .nav_footer{
 	display: grid;
 	grid-template-columns: repeat(1, 1fr);
-	grid-template-rows: 0.5fr  0.5fr;
-	grid-template-areas: 'nav nav nav' 'footer footer footer' 
+	grid-template-rows: 0.5fr auto 0.5fr;
+	grid-template-areas: 'nav nav nav' 'content content content ''footer footer footer';
+	position: relative;
 	/*height: 100vh;*/
 	/*gap: 0.5rem 1rem;*/
 }
@@ -36,6 +37,10 @@
 .logo img {
 	max-width: 10em;
 }
+.block-content{
+	grid-area: content;
+	margin-top: auto;
+}
 .footer{
 	text-align: center;
 	background: grey;
@@ -57,7 +62,7 @@
 
 }
 .header{
-	background: linear-gradient(rgba(4, 9, 30, 0.7),rgba(4, 9, 30, 0.7)), url(blackwoman.jpg) center no-repeat;
+	background: linear-gradient(rgba(4, 9, 30, 0.7),rgba(4, 9, 30, 0.7)), url({blogs/css/images/blackwoman.jpg}) center no-repeat;
 	grid-area: header;
 	color: white;
 	height: 300px;

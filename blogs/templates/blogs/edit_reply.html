@@ -1,15 +1,22 @@
 {% extends 'base.html'%}
 {% load static%}
 {%block content%}
-{{edit_reply}}<br><br>
-<form method="post">
-	{% csrf_token%}
-	{{form}}
-	 <div class="d-grid">
-	      <button class="btn" id="submitButton" type="submit">Post Comment</button>
-	   </div>
-	
-</form>
+
+<div class="container-fluid">
+	<h4> <span class="glyphicon glyphicon-user"></span>{{edit_reply.user}}</h4>
+	<p>{{edit_reply}}</p>
+
+
+	<form method="post" style="width:50%; margin-bottom: 10px; margin-right: 10px;">
+		{% csrf_token%}
+		{{form.body}}
+		 <div class="d-grid" style="margin-top:10px;">
+		      <button class="btn btn-info btn-sm" type="submit">Post Comment</button>
+
+		 </div>
+		
+	</form>
+</div>
 
 
 {% endblock%}

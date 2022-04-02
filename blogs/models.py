@@ -33,3 +33,11 @@ class CommentReply(models.Model):
 	
 	def __str__(self):
 		return self.body
+
+# Edublog help section
+class RoommateHelp (models.Model):
+	user=models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
+	message=models.TextField()
+	created=models.DateTimeField(auto_now_add=True)
+	def __str__(self):
+		return self.message

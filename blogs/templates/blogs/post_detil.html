@@ -2,151 +2,56 @@
 {% load static%}
 {% load crispy_forms_tags%}
 {%block content%}
-      <div class="container mainmargin">
-        <div class="row">
-          <div class="main col-sm-8">
-            <div class="single-post">
-              <h1 class="post-title">{{detil.headline}}</h1>
-              <div class="post-meta">
-                <div class="post-author"><i class="far fa-user-circle"></i> By Someone</div>
-                <div class="post-date"><i class="far fa-calendar-alt"></i> 02/09/2021</div>
-                <div class="post-comments"><i class="far fa-comment"></i> No Comments</div>
-              </div>
 
-              <p class="post-sub-title">{{detil.heading}}</p>
-{%if detil.pk  == 1%}<img src="{% static 'blogs/images/ASUU.jpg'%}" alt="">{%endif%}
-              <p class="text-gray">{{detil.content | slice:':703'|safe}}</p>
-                <h3>Lorem ipsum dolor sit amet consectetur.</h3>
-                <ul class="text-list">
-                  <li>Lorem ipsum dolor sit amet.</li>
-                  <li>Lorem ipsum dolor sit amet.</li>
-                  <li>Lorem ipsum dolor sit amet.</li>
-                  <li>Lorem ipsum dolor sit amet.</li>
-                </ul>
-                <p class="text-gray">{{detil.content | slice:'703:'|safe}}</p>
-                <blockquote class="blockquote d-flex">
-                  <div class="icon"><i class="fas fa-quote-right"></i></div>
-                  <div class="text">
-                  <p class="quote-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                  <p class="quote-author text-muted">Someone famous</p>
+                <div class="container-fluid" style="margin-bottom: 10px;">
+                    <div class="row">
+                        <div class="col-sm-8 ">
+                            <h2>{{detil.headline}}</h2>
+                            <div class="jumbotron pre-srollable" style="width:100%"><p>{{detil.content|safe}}</p></div>
+                        </div>
+                            <div class="col-sm-4 bg-info">
+                               <h2>Recent Post</h2>
+                            <div class="jumbotron pre-scrollable" style="width:100%">{{detil.content|safe}}</div>
+                      </div>
+                    </div>
+                </div>
+                <!-- Comment Form -->
+                <div class="container-fluid bg-info" style="margin-top: 10px; width: 50%; margin-left: 0;">
+                  <h3>Leave a comment</h3>
+                    <div class="jumbotron">
+                        <form method="POST">
+                            {% csrf_token%}
+                            {{form.body}}
+                          <button type="submit" class="btn btn-primary btn-sm" style="margin-top:10px;">Post Comment</button>
+                      </form>
+                    </div>
                   </div>
-                </blockquote>
-                <p class="text-gray"> 
-              <div class="share">
-                <a class="fb" href=""><i class="fab fa-facebook-f"></i> FACEBOOK</a>
-                <a class="google" href=""> <i class="fab fa-google-plus-g"></i> GOOGLE+</a>
-                <a class="twit" href=""><i class="fab fa-twitter"></i> TWITTER</a>
-                <a class="link" href=""><i class="fab fa-linkedin-in"></i> LINKEDIN</a>
-                <a class="pin" href=""><i class="fab fa-pinterest-p"></i> PINTEREST</a>
-              </div>
-              <div class="navigation">
-                <a class="prew"><i class="fas fa-chevron-left"></i> PREVIOUS</a>
-                <a class="next">NEXT <i class="fas fa-chevron-right"></i></a>
-              </div>
-              <div class="line" >Leave a Comment</div>
-              <form id="commentForm" method='post'>
-                {% csrf_token%}
-                {{form|crispy}}
-                <!-- {{form.commenter}}<br> -->
-                <!-- {{form.user}}<br> -->
-                <!-- {{form.body}}<br> -->
-                <div class="d-none" id="submitSuccessMessage">
-                  <div class="text-center mb-3">Form submission successful!</div>
-                </div>
-                <!-- Form submissions error message -->
-                <div class="d-none" id="submitErrorMessage">
-                  <div class="text-center text-danger mb-3">Error sending message!</div>
-                </div>
-                <!-- Form submit button -->
-                <div class="d-grid">
-                  <button class="btn" id="submitButton" type="submit">Post Comment</button>
-                </div>
-              </form>Comments:{{count}}
-              <div class="form-control">
-                 {% for comment in comments%}
-                    <p>@{{comment.user}}:&nbsp {{comment.body}} </p>
-                      {% if request.user == comment.user%}
-                        <a href="{% url 'blogs:update_detil' comment.pk %}">Edit comment</a>
-                         <span>|<a href="{% url 'blogs:delete_comment' comment.pk%}">Delete|</a></span>
-                         <span><a href="{% url 'blogs:comment_reply' comment.pk%}">|Reply</a></span>
-                    {% else%}
-                    <span><a href="{% url 'blogs:comment_reply' comment.pk%}">Reply</a>| </span>
-                <!-- <span><a href="{% url 'blogs:delete_comment' comment.pk%}">Delete</a></span> -->
-                {% endif%}
-                <br><br>
-                {%empty%} 
-                  <p>Be the first to comment</p>
-                {% endfor%}
-               </div>
-            </div>
-          </div>
-          <div class="sidebar col-sm-4">
-            <div class="input-group input-group-sm mt-4">
-              <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-              <div class="input-group-append">
-                <span class="input-group-text color" id="inputGroup-sizing-sm"><i class="fas fa-search"></i></span>
-              </div>
-            </div>
-            <div class="recent-post">
-                  <h4>Recent Post</h4>
-                  <ul>
-                    <li>{% for post in post%}
-                        <div class="recent-post-thumb">
-                            <img src="img/about-helf-1.png" alt="" />
+                  <!-- Displaying Comments -->
+                  <div class="container-fluid bg-info" style="width:50%; margin-top: 10px; margin-left: 0; margin-bottom: 10px;">
+                        <h4>Comments <span class="badge">{{count}}</span></h4>
+                        <div class="jumbotron pre-scrollable" >
+                                {% for comment in comments%}
+                                    <p><span class="glyphicon glyphicon-user"></span> {{comment.user}}</p>
+                                    <p>{{comment.body}} </p>
+                                    {% if request.user == comment.user%}
+                                      <a href="{% url 'blogs:update_detil' comment.pk %}" class="btn btn-sm  btn-primary">Edit comment</a>
+                                       <span><a href="{% url 'blogs:delete_comment' comment.pk%}" class="btn btn-sm btn-primary">Delete</a></span>
+                                       <span><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-sm btn-primary">Reply</a></span>
+                                    {% else%}
+                                        <span><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-sm btn-primary">Reply</a> </span>
+                                    {% endif%}
+                                          <br><br>
+                                          <!-- Reply section -->
+                                          <div class="row" style="margin-bottom: 10px;">
+
+                                            <h4><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-primary">View Replies</a></h4>
+                                          </div>
+                                        <!--End of Reply Section  -->
+                                {%empty%} 
+                                        <p>Be the first to comment</p>
+                                {% endfor%}
                         </div>
-                        <div class="recent-post-content">
-                            <h5><a href="#">{{post.headline| slice:":25"}}</a></h5>
-                        </div>
-                        <div class="recent-post-meta">
-                            <h5><span class="time" ><i class="far fa-calendar-alt"></i>{{post.pub_date}}</span></h5>
-                            <span class="comment"><i class="far fa-comment"></i> </span>
-                        </div>
-                    </li>{% endfor%}
-                  
-                
-              </ul>
-              <a class="btn" href="{%url 'blogs:post'%}">See More</a>
-            </div>
-            <div class="sidebar-benefits-items pt-5">
-              <h4>Our Software is a Quick spending Solution for Generic</h4>
-              <div class="sidebar-benefits-item">
-                <div class="sidebar-benefits-item-title d-flex">
-                  <div class="icon"><img src="img/icon/Group 1802.svg" alt=""></div>
-                  <p class="title">Expand Your Reach</p>
-                </div>    
-                <div class="text-gray">
-                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</p>
-                </div>
               </div>
-              <div class="sidebar-benefits-item">
-                <div class="sidebar-benefits-item-title d-flex">
-                  <div class="icon"><img src="img/icon/Group 1953.svg" alt=""></div>
-                  <p class="title">Higher Annulized Growth</p>
-                </div>     
-                <div class="text-gray">
-                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</p>
-                </div>
-              </div>
-              <div class="sidebar-benefits-item">
-                <div class="sidebar-benefits-item-title d-flex">
-                  <div class="icon"><img src="img/icon/Group 1954.svg" alt=""></div>
-                  <p class="title">Book Your Provider</p>
-                </div>
-                <div class="text-gray">
-                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</p>
-                </div>
-              </div>
-              <div class="sidebar-benefits-item">
-                <div class="sidebar-benefits-item-title d-flex">
-                  <div class="icon"><img src="img/icon/Group 1955.svg" alt=""></div>
-                  <p class="title">Book Your Provider</p>
-                </div>
-                <div class="text-gray">
-                  <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo</p>
-                </div>
-              </div>  
-          </div>
-        </div>
-        </div>
-      </div>
+             
+      
 {%endblock%}

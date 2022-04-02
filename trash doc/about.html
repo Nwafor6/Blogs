@@ -1,0 +1,61 @@
+{% extends 'base.html'%}
+{%load static%}
+{% block content%}
+
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About Page</title>
+
+    <style>
+        .about{
+          text-align: center;
+          /*background-color: gre*/y;
+          color: white;
+
+        }
+        body{
+          background-color: grey;
+        }
+    </style>
+    
+  </head>
+
+   
+<body>
+    
+    <div  class= "about">
+        <div>
+            <br>
+            <h1>About</h1>
+              <p > 
+                  <img src="{% static 'blogs/images/my_pic.jpg'%}" alt=""> <br>
+                  <span>SchoolBlog</span> is an idea of a Nigeria student <br>
+                  to help both undergraduates and aspirants of various  Nigerian <br>
+                  Universities. The blog is decidated to serving Nigerian students liable <br>
+                  information and provide them with upto date information about Eduacation both <br>
+                  in Nigeria and other foreign school. <br>
+                  
+                  <br>
+                  You can contact us in on Facebook <a href="http://:www.facebook.com">Facebook</a>
+            </p>
+            <p>
+                <h5> Our Audience</h5>
+                <hr  style="margin-left: 550px;width: 400px; ; padding: 1px; background-color: whitesmoke;">
+                Both Nigeria and International student are our target audience <br>
+                and we hope to bring them legit new both in Nigeria and outside Nigeria 
+            </p>
+        </div>
+    </div>      
+  
+</div>
+
+
+
+
+
+{% endblock content%}
