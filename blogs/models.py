@@ -41,3 +41,10 @@ class RoommateHelp (models.Model):
 	created=models.DateTimeField(auto_now_add=True)
 	def __str__(self):
 		return self.message
+
+class Carousel (models.Model):
+	image=models.ImageField(upload_to="img")
+	title=models.CharField(max_length=100)
+	body=models.TextField()
+	def __str__(self):
+		return self.body
