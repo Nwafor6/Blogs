@@ -1,53 +1,82 @@
 {% extends 'base.html'%}
 {% load static%}
 {% block content%}
+<style>
+	.rough-div{
+		background-color: grey;
+		padding: 10px;
+		color: white;
+		border-radius: 1rem;
+		margin-bottom: 10px;
+	}
+</style>
 
-<div class="container-fluid" style="margin-top: 4rem;">
-	<div class="row">
-		<h3 class="text-center">EduBlog <span class="text-danger">RoomateHelp And Accommodation</span> Help</h3> <hr>
-		<div class="col-sm-6">
-			<h5>Instruction on how to make a most on EduBlog Help Box follow the steps below</h5>
+<div class="container-fluid">
+	<h2 class="text-center text-danger">EduBlog Help Desk <span class="glyphicon glyphicon-phone"></span></h2> <hr>
+	<div class="rough-div text-center">
+		<h5>How to make a most on EduBlog Help Box follow the steps below</h5>
 			<p>Step 1: Resigiter as a User, you can skip step 1 if you are a registerd user</p>
 			<p> Step 2: Write using the message box bellow.</p>
 			<p>Step 3: Make your description or message comprehensive so others can understand.</p>
 			<p>Step 4: Click Post Message to post your message.</p>
 			<p>Note: The charater limit is 1000</p>
-		</div>
-		<div class="col-sm-6" style=" border: 0.3rem solid red;">
-			<h3>Are You in search of Accommodation????</h3><hr style="border:1px solid black">
-			<p>EduBlog has many empty lodges around ifite in and oustside the school with:
-				<ul>
-					<li>Running water</li>
-					<li>Steady Light</li>
-					<li>Security</li>
-					<li>And very close to school</li>
-				</ul>
-			</p>
-			<p>Contact EduBlog Accomodation management for acccomodation help around Unizik @ 07025065702</p>
-			
-		</div>
 	</div>
-	<div class="row bg-info" style="width:40%; margin-left: 3px;">
-		<h5 class="text-center">Help Box</h5>
-		<div class="jumbotron text-center">
-			<form method="POST">
-				{% csrf_token%}
-				{{form.message}}
-				<button type="submit" class="btn btn-sm btn-primary" style="margin-top: 10px;">Post Message</button>
-			</form>
+	<div class="row">
+		<div class="col-sm-6" style="background-color: wheat; margin-bottom: 10px;">
+			<h3>Need a roommate <span class="glyphicon glyphicon-question-sign"></span> Use the Helpbox</h3>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-12">
+						<h5 class="text-center">Help Box</h5>
+						<div class=" text-center">
+							<form method="POST">
+								{% csrf_token%}
+								{{form.message}}
+								<button type="submit" class="btn btn-sm btn-primary" style="margin-top: 10px; margin-bottom: 10px;">Post Message</button>
+							</form>
+							<!-- display posts -->
+							<div class="rough-div" style="width: auto;">
+								{% for post in roommate%}
+								<div style="padding: 10px;">
+									<h4><span class="glyphicon glyphicon-user"></span> {{post.user}}  <span class="badge"> {{post.created|timesince}}</h4>
+									<p>{{post.message}}</span></p><hr>
+									<a href="{% url 'blogs:Edu-help-edit' post.id%}" class="btn btn-primary btn-sm">Edit Post</a>
+									<a href="{% url 'blogs:Edu-help-del' post.id%}" class="btn btn-primary btn-sm">Delete Post</a>
+								</div>
+								{% endfor%}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+		<div class="col-sm-6 panel panel-default" style="padding-left: 40px;">
+				<div class="panel-heading"><h4>Are You in search of Accommodation <span class="glyphicon glyphicon-question-sign"><span class="glyphicon glyphicon-question-sign"><span class="glyphicon glyphicon-question-sign"></h4></div>
+					<div class="panel-body ">
+						<p>EduBlog has many empty lodges around ifite in and oustside the school with:
+							<ul>
+								<li>Running water</li>
+								<li>Steady Light</li>
+								<li>Security</li>
+								<li>And very close to school</li>
+							</ul>
+						</p>
+					</div>
+				    <div class="panel-footer"><p>Contact EduBlog Accomodation management for acccomodation help around Unizik @ 07025065702</p></div>
+				</div>
+				<div class="col-sm-6" style="padding-left:40px;">
+						<div class="rough-div ">
+							<h3>Get all Unizik past-questions</h3>
+								<ul>
+									<li>Post Utme PastQuestion</li>
+									<li>Undergraduate Past-question</li>
+								</ul>
+							<p>Note: We can deliver it to you inrespective of your location</p>
+							<p>Contact EduBlog Help Desk around Unizik @ 07025065702</p>
+						</div>
+				</div>
+			</div>
 	</div>
-	
 </div>
-	<div class="jumbotron" style="width: 70%; margin-left: 10px; margin-top: 10px;">
-		{% for post in roommate%}
-		<div style="padding: 10px;">
-			<h4><span class="glyphicon glyphicon-user"></span> {{post.user}}</h4>
-			<p>{{post.message}} <span class="badge"> {{post.created|timesince}}</span></p><hr>
-			<a href="{% url 'blogs:Edu-help-edit' post.id%}" class="btn btn-primary btn-sm">Edit Post</a>
-			<a href="{% url 'blogs:Edu-help-del' post.id%}" class="btn btn-primary btn-sm">Delete Post</a>
-		</div>
-		{% endfor%}
-	</div>
 
 {% endblock%}

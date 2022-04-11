@@ -1,0 +1,111 @@
+{% extends 'base.html'%}
+{% load static%}
+{% load crispy_forms_tags%}
+{%block content%}
+
+    <div class="container">
+   <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h1>{{detil.headline}}</h1></div>
+    </div>
+     <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p>Author: {{detil.reporter}}<br>
+            <p>Posted: {{detil.pub_date|timesince}}</p>
+            <p>{{detil.institution_website|safe}}| {{detil.institution_acronmy}}</p>
+          </p><hr>
+          {% if not detil.post_image%}
+          <p>{{detil.content|safe}}</p>
+          {%else%}
+          <p><img src="{{detil.post_image.url}}" style="width:70%; heiht:50%;"></p>
+          <p>{{detil.content|safe}}</p>
+          {%endif%}
+          <!-- comments to post -->
+            <div class="container-fluid bg-ilnfo">
+                  <h3>Leave a comment</h3>
+                   <h4>Comments <span class="badge">{{count}}</span></h4>
+                    <div class="jumbootron">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token%}
+                            {{form}}
+                          <button type="submit" class="btn btn-default btn-xs" style="margin-top:10px;">Post Comment</button>
+                      </form>
+                       {% for comment in comments%}
+                       {% if comment.comment_image%}
+                        <p style="margin-top:10px;"><span class="glyphicon glyphicon-user"></span> {{comment.user}}</p>
+                        <p>{{comment.body}} </p>
+                        <p><img src="{{comment.comment_image.url}}" alt="comment-img"></p>
+                        {%else%}
+                        <p style="margin-top:10px;"><span class="glyphicon glyphicon-user"></span> {{comment.user}}</p>
+                        <p>{{comment.body}} </p>
+                        {%endif%}
+                        {% if request.user == comment.user%}
+                          <a href="{% url 'blogs:update_detil' comment.pk %}" class="btn btn-sm  btn-default btn-xs">Edit comment</a>
+                           <span><a href="{% url 'blogs:delete_comment' comment.pk%}" class="btn btn-sm btn-default btn-xs">Delete</a></span>
+                           <span><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-sm btn-default btn-xs">Reply</a></span>
+                        {% else%}
+                            <span><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-sm btn-default btn-xs">Reply</a> </span>
+                        {% endif%}
+                              <br><br>
+                              <!-- Reply section -->
+                              <div class="row" style="margin-bottom: 10px;">
+
+                                <h4><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-default btn-xs">View Replies</a></h4>
+                              </div>
+                            <!--End of Reply Section  -->
+                        {%empty%} 
+                                <p>Be the first to comment</p>
+                        {% endfor%}
+                    </div>
+                  </div>
+          <!-- End of comments to posts -->
+        </div>
+        <div class="panel-footer">Panel Footer</div>
+     </div> 
+     </div>
+     <div class="col-md-3">
+       <div class="panel panel-default">
+         <div class="panel-heading text-center"><h4>Related Posts</h4></div>
+          <div class="panel-body">
+            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
+            </p><hr>
+            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
+            </p><hr>
+            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
+            </p><hr>
+            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
+            </p>
+          </div>
+          <div class="panel-footer"><h6>Place order</h6></div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+{%endblock%}

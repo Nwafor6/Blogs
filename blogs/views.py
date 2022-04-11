@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,  get_object_or_404
-from .models import User, Article, Comment,CommentReply, RoommateHelp
-from .forms import CommentForm, ReplyForm, RoommateHelpForm
+from .models import User, Article, Comment,CommentReply, RoommateHelp, Carousel
+from .forms import CommentForm, ReplyForm, RoommateHelpForm, ContactForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -10,10 +10,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 from django.contrib.messages import get_messages
-
+from django.core.mail import send_mail
+from django.conf import settings
+import re
 # Create your views here.
-
-
 
 
 
@@ -73,8 +73,9 @@ def registerPage(request):
 
 #Working Perfectly
 def post(request):
-	post=Article.objects.all()
-	context={'post':post}
+	post=Article.objects.order_by('-pub_date')
+	footerDisplay=Article.objects.all()[:4]
+	context={'post':post, 'footerDisplay':footerDisplay}
 	return render (request, 'blogs/index.html', context)
 
 
@@ -201,21 +202,30 @@ def post_detil (request, pk):
 	post=Article.objects.all()
 	detil=Article.objects.get(pk=pk)
 	comments=detil.comments.all()
-	new_comment=None
+	comment=CommentForm(request.POST, request.FILES)
+	# new_comment=None
 	if request.method == 'POST':
-		comment=Comment.objects.create(
-			user=request.user,
-			detil=detil,
-			body=request.POST.get('body'),
-			)
+		if comment.is_valid():
+			# new_comment=comment.save(commit=False)
+			# new_comment.detil=detil
+			# new_comment.user=request.user
+			# if new_comment.image==True:
+			# 	new_comment.delete()
+
+			comment=Comment.objects.create(
+				user=request.user,
+				detil=detil,
+				body=request.POST.get('body'),
+				comment_image=request.FILES.get('comment_image')
+				)
+
 		
 		return HttpResponseRedirect(reverse('blogs:post_detil', args=[str(detil.pk)]))
 	else:
 		form=CommentForm()
 	#count the number of comments 
 	count=comments.count()
-	context={'count':count, 'detil':detil, 'post':post, 'comments':comments, 
-	'new_comment':new_comment, 'form':form, }
+	context={'count':count, 'detil':detil, 'post':post, 'comments':comments,'form':form, }
 	return render(request, 'blogs/post_detil.html',context)
 # EduBlog Help Section
 def roomMate(request):
@@ -227,7 +237,7 @@ def roomMate(request):
 			message=request.POST.get('message')
 			)
 		return redirect('blogs:Edu-help')
-	context={'roommate':roommate, 'form':form}
+	context={'roommate':roommate, 'form':form, }
 	return render( request, 'blogs/roommate-help.html', context)
 
 def roommateDelete(request, pk):
@@ -249,3 +259,21 @@ def editroommatePost(request, pk):
 			return redirect('blogs:Edu-help')
 	context={'form':form}
 	return render(request, 'blogs/roommate-help.html', context)
+
+def carousel(request):
+	slidedata=Carousel.objects.all()[0]
+	context={'slide':slidedata}
+	return render (request, 'blogs/carousel.html', context)
+
+
+def contact(request):
+	if request.method=='POST':
+		message=request.POST['message']
+		send_mail(
+			'ContactForm',
+			message,
+			settings.EMAIL_HOST_USER,
+			['nwaforglory6@gmail.com'],
+			fail_silently=False
+			)
+	return render(request, 'blogs/index.html')

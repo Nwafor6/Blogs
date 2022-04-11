@@ -7,7 +7,8 @@ class CommentForm(forms.ModelForm):
 	body=forms.CharField(max_length=100, widget=forms.Textarea(attrs={'class':'form-control','Placeholder':'Comment here','rows':3}))
 	class Meta:
 		model=Comment
-		fields=[ 'body']
+		comment_image= forms.ImageField(required=False)
+		fields=[ 'body','comment_image']
 		
 class ReplyForm(forms.ModelForm):
 	# user= forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class':'form-control', 'Placeholder':'Enter Username' }))
@@ -21,3 +22,8 @@ class RoommateHelpForm(forms.ModelForm):
 	class Meta:
 		model=RoommateHelp
 		fields=['message']
+
+
+class ContactForm(forms.Form):
+
+	message=forms.CharField(max_length=1000, widget=forms.Textarea(attrs={'class':'form-control','Placeholder':'Enter Enter message here...','rows':3}))

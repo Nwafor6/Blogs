@@ -3,55 +3,107 @@
 {% load crispy_forms_tags%}
 {%block content%}
 
-                <div class="container-fluid" style="margin-bottom: 10px;">
-                    <div class="row">
-                        <div class="col-sm-8 ">
-                            <h2>{{detil.headline}}</h2>
-                            <div class="jumbotron pre-srollable" style="width:100%"><p>{{detil.content|safe}}</p></div>
-                        </div>
-                            <div class="col-sm-4 bg-info">
-                               <h2>Recent Post</h2>
-                            <div class="jumbotron pre-scrollable" style="width:100%">{{detil.content|safe}}</div>
-                      </div>
-                    </div>
-                </div>
-                <!-- Comment Form -->
-                <div class="container-fluid bg-info" style="margin-top: 10px; width: 50%; margin-left: 0;">
+    <div class="container">
+   <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h1>{{detil.headline}}</h1></div>
+    </div>
+     <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p>Author: {{detil.reporter}}<br>
+            <p>Posted: {{detil.pub_date|timesince}}</p>
+            <p>{{detil.institution_website|safe}}| {{detil.institution_acronmy}}</p>
+          </p><hr>
+          {% if detil.post_image%}
+          <p><img src="{{detil.post_image.url}}" style="width:70%; heiht:50%;"></p>
+          {%endif%}
+          <p>{{detil.content|safe}}</p>
+          <!-- comments to post -->
+            <div class="container-fluid bg-ilnfo">
                   <h3>Leave a comment</h3>
-                    <div class="jumbotron">
-                        <form method="POST">
+                   <h4>Comments <span class="badge">{{count}}</span></h4>
+                    <div class="jumbootron">
+                        <form method="POST" enctype="multipart/form-data">
                             {% csrf_token%}
-                            {{form.body}}
-                          <button type="submit" class="btn btn-primary btn-sm" style="margin-top:10px;">Post Comment</button>
+                            {{form}}
+                          <button type="submit" class="btn btn-default btn-xs" style="margin-top:10px;">Post Comment</button>
                       </form>
+                       {% for comment in comments%}
+                       {% if comment.comment_image%}
+                        <p style="margin-top:10px;"><span class="glyphicon glyphicon-user"></span> {{comment.user}}</p>
+                        <p>{{comment.body}} </p>
+                        <p><img src="{{comment.comment_image.url}}" alt="comment-img"></p>
+                        {%else%}
+                        <p style="margin-top:10px;"><span class="glyphicon glyphicon-user"></span> {{comment.user}}</p>
+                        <p>{{comment.body}} </p>
+                        {%endif%}
+                        {% if request.user == comment.user%}
+                          <a href="{% url 'blogs:update_detil' comment.pk %}" class="btn btn-sm  btn-default btn-xs">Edit comment</a>
+                           <span><a href="{% url 'blogs:delete_comment' comment.pk%}" class="btn btn-sm btn-default btn-xs">Delete</a></span>
+                           <span><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-sm btn-default btn-xs">Reply</a></span>
+                        {% else%}
+                            <span><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-sm btn-default btn-xs">Reply</a> </span>
+                        {% endif%}
+                              <br><br>
+                              <!-- Reply section -->
+                              <div class="row" style="margin-bottom: 10px;">
+
+                                <h4><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-default btn-xs">View Replies</a></h4>
+                              </div>
+                            <!--End of Reply Section  -->
+                        {%empty%} 
+                                <p>Be the first to comment</p>
+                        {% endfor%}
                     </div>
                   </div>
-                  <!-- Displaying Comments -->
-                  <div class="container-fluid bg-info" style="width:50%; margin-top: 10px; margin-left: 0; margin-bottom: 10px;">
-                        <h4>Comments <span class="badge">{{count}}</span></h4>
-                        <div class="jumbotron pre-scrollable" >
-                                {% for comment in comments%}
-                                    <p><span class="glyphicon glyphicon-user"></span> {{comment.user}}</p>
-                                    <p>{{comment.body}} </p>
-                                    {% if request.user == comment.user%}
-                                      <a href="{% url 'blogs:update_detil' comment.pk %}" class="btn btn-sm  btn-primary">Edit comment</a>
-                                       <span><a href="{% url 'blogs:delete_comment' comment.pk%}" class="btn btn-sm btn-primary">Delete</a></span>
-                                       <span><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-sm btn-primary">Reply</a></span>
-                                    {% else%}
-                                        <span><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-sm btn-primary">Reply</a> </span>
-                                    {% endif%}
-                                          <br><br>
-                                          <!-- Reply section -->
-                                          <div class="row" style="margin-bottom: 10px;">
+          <!-- End of comments to posts -->
+        </div>
+        <div class="panel-footer">Panel Footer</div>
+     </div> 
+     </div>
+     <div class="col-md-3">
+       <div class="panel panel-default">
+         <div class="panel-heading text-center"><h4>Related Posts</h4></div>
+          <div class="panel-body">
+            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
+            </p><hr>
+            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
+            </p><hr>
+            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
+            </p><hr>
+            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
+            </p>
+          </div>
+          <div class="panel-footer"><h6>Place order</h6></div>
+       </div>
+     </div>
+   </div>
+ </div>
 
-                                            <h4><a href="{% url 'blogs:comment_reply' comment.pk%}" class="btn btn-primary">View Replies</a></h4>
-                                          </div>
-                                        <!--End of Reply Section  -->
-                                {%empty%} 
-                                        <p>Be the first to comment</p>
-                                {% endfor%}
-                        </div>
-              </div>
-             
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       
 {%endblock%}

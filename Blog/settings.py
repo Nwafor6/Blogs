@@ -26,6 +26,13 @@ SECRET_KEY = 'django-insecure-=458xkt4h!+vic-70z5b1fd+xtfp!nedoj^&f%2!zail3gs(od
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+EMAIL_HOST= 'smtp.zoho.com'
+EMAIL_HOST_USER='nwaforglory6@gmail.com'
+EMAIL_HOST_PASSWORD=''
+EMAIL_PORT= 587 
+EMAIL_USE_TLS=True
+EMAIL_BACKEND='django.core.mail.backends.EmailBackend'
+
 ALLOWED_HOSTS = []
 
 
@@ -127,6 +134,8 @@ STATICFILES_DIRS =[
     BASE_DIR / 'static'
 ]
 CRISPY_TEMPLATE_PACK='bootstrap4'
+MEDIA_URL= '/media/'
+MEDIA_ROOT=BASE_DIR/'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

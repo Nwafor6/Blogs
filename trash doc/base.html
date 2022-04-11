@@ -2,136 +2,176 @@
 {%load static%}
 <html lang="en">
 <head>
-	<!-- <link rel="stylesheet" type="text/css" href="{% static 'blogs/css/bootstrap.css'%}">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Firmbee.com - Free Project Management Platform for remote teams"> 
-    <title>Name of company</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/0e035b9984.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'blogs/css1/style.css'%}"> -->
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- bootstrap 4 -->
+    
+    <!-- end of bootstrap 4 -->
+     <style>
+    /* Set black background color, white text and some padding */
+      #logo{
+      background-color: #b70c01;
+    }
+    #footer{
+      background-color: #b70c01;
+
+    }
+    #footer h5{
+      color: white;
+    }
+    #footer p{
+      color: whitesmoke;
+    }
+  </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg fixed-top py-3">
-        <div class="container">
-          <!-- <a class="navbar-brand" href="index.html"><img src="img/logo-white.svg" alt=""></a> -->
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
+
+  <div id="header">
+   <div id="logo">
+     <div class="container">
+       <div class="row align-item-center py-3" style="margin-top: 10px;">
+         <div class="col-lg-3 col-md-4 col-sm-5 mb-sm-0 mb-2">
+           <div class="logo text-sm-left text-center">
+             <a href="/"><img src="{% static 'blogs/images/er.png'%}" class="img-fluid" style="width:50%; margin-bottom: 10px;"></a>
+           </div>
+         </div>
+         <div class="col-lg-6 col-md-8 col-sm-7">
+           <form method="GET" action="https://myschool.ng/search" accept-charset="UTF-8">
+            <div class="input-group">
+              <input type="text" name="search_string" class="form-control" placeholder="Enter your search keywords here...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+              </span>
+            </div>
+          </form>
+         </div>
+         <div class="col-lg-3 text-right ">
+          <div>
+            {% if request.user.is_authenticated %}
+           <a href="{% url 'blogs:logout'%}"class="btn btn-default btn-sm">Logout</a>
+           {%else%}
+           <a href="{% url 'blogs:login'%}"class="btn btn-default btn-sm">Login</a>
+           <a href="{% url 'blogs:register'%}" class="btn btn-default btn-sm">Sign Up</a>
+           {% endif%}
+           </div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <!-- Second Nav bar -->
+     <nav class="navbar navbar-inverse" style="background-color:#830000; border: none; margin-left: -10px; margin-right: -10px;">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'blogs:about'%}">About us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="portfolio.html">Portfolio</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="blog.html">Blog</a>
-              </li>
-              <li class="nav-item">
-                {% if request.user.is_authenticated %}
-                <a class="nav-link" href="{% url 'blogs:logout'%}"><i class="fas fa-search"></i>Logout</a>
-                {%else%}
-                <a class="nav-link" href="{% url 'blogs:login'%}"><i class="fas fa-search"></i>Login</a>
-                {% endif%}
-              </li>
-              <li class="nav-item">
-                <button class="btn-item">Sign Up</button>
-              </li>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <div class="container dropdown" style="margin-right:10px;">
+            <ul class="nav navbar-nav" >
+              <li><a href="/" >Home</a></li>
+              <li><a href="{% url 'blogs:about'%}" >About</a></li>
+              <li><a href="{% url 'blogs:Edu-help'%}">Help</a></li>
+              <li class="dropdown">
+                <a data-toggle="dropdown" href="#">Universities
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Federal</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">State</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Private</a></li>
+                </ul>
+            </li>
+             <li class="dropdown-toggle">
+                <a  data-toggle="dropdown" href="#">Polytechnics
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Federal Polytechnics</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">State Polytechnics</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Private Polytechnics</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a data-toggle="dropdown" href="#">Colledge of Eduactions
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Federal Colledges</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">State Colledges</a></li>
+                </ul>
+            </li>
+              <li><a href="#">Our Services</a></li>
+               <li class="dropdown">
+                <a class="dropdown-toggle 
+
+                " data-toggle="dropdown" href="#">Scholarships
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">International Scholarships</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">National Schoarships</a></li>
+                </ul>
+            </li>
+              <li><a href="#" >Advertise</a></li>
+              <li><a href="#" >Shop and Sell</a></li>
+            </ul>
             </ul>
           </div>
         </div>
-      </nav>
-    <header>
-        <div class="img-circle"><img src="img/second-circle.svg" alt=""></div>
-        <div class="img-dots"><img src="img/dots.svg" alt=""></div>
-        <div class="container">
-            <div class="header row py-md-5">
-                <div class="header-text col-md-6">
-                    <h1>Best Design agency for your business</h1>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
-                    <a class="btn btn-light header-btn">Read More <img src="img/arrow-right.svg" alt="" style="width:20px"></a>
-                </div>
-                <div class="header-img col-md-6">
-                    <img src="img/img-header.svg" alt="">
-                </div>
-            </div>
-        </div>
-    </header> 
+      </div>
+    </nav> 
+    <!-- end of second nav bar -->
+   </div>
+ </div>
 
+
+  
     {% if messages %}
-    <ul class="messages"> 
-      {% for message in messages %} 
-      <li>{{ message }}</li>
-       {% endfor %} 
-     </ul> 
+    <div class="alert alert-success">
+      <ul class="messages"> 
+        {% for message in messages %}
+         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+         <strong>{{ message }}</strong>
+        <!-- <li>{{ message }}</li> -->
+         {% endfor %} 
+       </ul>
+     </div> 
      {% endif %}
-
-
+  
 
    {% block content%} {% endblock content%}
-   <!-- Footer should be here -->
-        <!-- <footer class="py-5">
-          <div class="container">
-            <div class="row">
-              <div class="footer-item col-md-3">
-                <p class="footer-item-title">Logo.co</p>
-                <p>Adress: 135 Barnard St. Brooklyn,</p>
-                <p>NY 10036, United States</p>
-                <p>Phone: 1-400-123-1234</p>
-                <p>Email: example@creativelab.com</p>
-              </div>
-              <div class="footer-item col-md-3">
-                <p class="footer-item-title">Services</p>
-                <p class="footer-text">Apps Developer</p>
-                <p>Graphic Design</p>
-                <p>Web Developer</p>
-                <p>Marketing</p>
-                <p>IOS Developer</p>
-              </div>
-              <div class="footer-item col-md-3">
-                <p class="footer-item-title">Links</p>
-                <a href="">About Us</a>
-                <a href="">Portfolio</a>
-                <a href="">Blog</a>
-                <a href="">Sing In</a>
-              </div>
-              <div class="footer-item col-md-3">
-              <p class="footer-item-title">Get In Touch</p>
-                <form>
-                  <div class="mb-3 pb-3">
-                    <label for="exampleInputEmail1" class="form-label pb-3">Enter your email and we'll send you more information.</label>
-                    <input type="email" placeholder="Your Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  </div>
-                  <button type="submit" class="btn btn-primary">Subscribe</button>
-                </form>
-              </div>
-              <div class="copyright pt-4 text-center text-muted">
-                <p>&copy; 2022 YOUR-DOMAIN | Created by <a href="https://firmbee.com/solutions/to-do-list/" title="Firmbee - Free To-do list App" target="_blank">Firmbee.com</a></p>
-                <!--
-                This template is licenced under Attribution 3.0 (CC BY 3.0 PL),
-                You are free to: Share and Adapt. You must give appropriate credit, you may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
-                --> 
-            </div>
-          </div>
-        </footer>
-    </main>
-    <div class="fb2022-copy">Fbee 2022 copyright</div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="{% static 'blogs/js1/addshadow.js'%}"></script>
+
+  <!-- Footer started here -->
+  <div class="container-fluid" id="footer">
+      <div class="row">
+        <div class="container">
+        <div class="col-sm-3">
+          <h5>Welcome to EduBlog</h5><hr>
+          <p>Yes! We are Nigeria's No1 Students' and Educational Resource Website</p><br><br><br>
+          Join us on EduBlog <br>
+          <a href="#" class="btn btn-success">Register</a>
+          <p><a href="">Privacy Policy</a></p>
+          <p><a href="">Terms of Use</a></p>
+        </div>
+        <div class="col-sm-3">
+          <h5>Explore</h5><hr></div>
+        <div class="col-sm-3"><h5>Quick Links</h5><hr></div>
+        <div class="col-sm-3"><h5>Connect with us</h5><hr></div>
+      </div>
+    </div>
+  </div>
+<!-- Footer ended here -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>        
 </body>
-</html> -->
+</html>

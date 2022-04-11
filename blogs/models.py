@@ -10,26 +10,45 @@ class Article(models.Model):
 	headline=models.CharField(max_length=200)
 	slug=models.CharField(max_length=200)
 	content=models.TextField()
+	institution_name=models.CharField(max_length=100)
+	institution_website=models.CharField(max_length=100)
+	institution_acronmy=models.CharField(max_length=20)
+	post_image=models.ImageField(null=True, blank=True,upload_to='Post-img/')
+
+
+	@property
+	def image_url(self):
+		if self.post_image and hasattr(self.post_image,'url'):
+			return self.post_image.url
+		return None
 
 	def __str__ (self):
 		return self.headline
 
+
+
   
 class Comment(models.Model):
-	# commenter=models.CharField(max_length=50)
 	user=models.ForeignKey(User, on_delete=models.CASCADE)
 	body=models.TextField()
 	detil=models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
+	comment_image=models.ImageField(null=True, blank=True, upload_to='comment-img/')
+
+	@property
+	def image_url(self):
+		if self.comment_image and hasattr(self.comment_image,'url'):
+			return self.comment_image.url
+		return None
 	
 	
 	def __str__(self):
 		return self.body
 
 class CommentReply(models.Model):
-	# commenter=models.CharField(max_length=50)
 	user=models.ForeignKey(User, on_delete=models.CASCADE)
 	body=models.TextField()
 	detil=models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='reply')
+	
 	
 	def __str__(self):
 		return self.body
@@ -47,4 +66,4 @@ class Carousel (models.Model):
 	title=models.CharField(max_length=100)
 	body=models.TextField()
 	def __str__(self):
-		return self.body
+		return self.title

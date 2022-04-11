@@ -25,8 +25,8 @@
 	</div>
 		<form method="post" style="width:50%; margin-bottom: 10px;">
 			{% csrf_token%}
-			{{form.as_body}}
-			<button class="btn btn-info btn-sm" id="submitButton" type="submit">Post Comment</button>
+			{{form.body}}
+			<button class="btn btn-info btn-sm" id="submitButton" type="submit" style=" margin-top: 10px;">Post Comment</button>
 		
 		</form>
 </div>
