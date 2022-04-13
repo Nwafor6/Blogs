@@ -16,9 +16,12 @@
             <p>{{detil.institution_website|safe}}| {{detil.institution_acronmy}}</p>
           </p><hr>
           {% if detil.post_image%}
-          <p><img src="{{detil.post_image.url}}" style="width:70%; heiht:50%;"></p>
-          {%endif%}
+          <p><img src="{{detil.image_url}}" style="width:70%; heiht:50%;"></p>
           <p>{{detil.content|safe}}</p>
+          {%else%}
+          <!-- <p><img src="{{detil.image_url.url}}" style="width:70%; heiht:50%;"></p> -->
+          <p>{{detil.content|safe}}</p>
+          {%endif%}
           <!-- comments to post -->
             <div class="container-fluid bg-ilnfo">
                   <h3>Leave a comment</h3>

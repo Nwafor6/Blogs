@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect,  get_object_or_404
-from .models import User, Article, Comment,CommentReply, RoommateHelp, Carousel
+from .models import *
 from .forms import CommentForm, ReplyForm, RoommateHelpForm, ContactForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
@@ -12,6 +12,7 @@ from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views.generic import ListView,DetailView
 import re
 # Create your views here.
 
@@ -74,7 +75,7 @@ def registerPage(request):
 #Working Perfectly
 def post(request):
 	post=Article.objects.order_by('-pub_date')
-	footerDisplay=Article.objects.all()[:4]
+	footerDisplay=Article.objects.all()[:3]
 	context={'post':post, 'footerDisplay':footerDisplay}
 	return render (request, 'blogs/index.html', context)
 
@@ -277,3 +278,33 @@ def contact(request):
 			fail_silently=False
 			)
 	return render(request, 'blogs/index.html')
+
+
+class MarketListView(ListView):
+
+	model=Market
+	template_name='blogs/market.html'
+	paginate_by = 2
+	context_object_name='products'
+
+class MarketDetailView(DetailView):
+
+	model=Market
+	template_name='blogs/market_detail.html'
+	context_object_name='product'
+
+
+class CategoryDetailView(ListView):
+
+
+	template_name='blogs/market_category.html'
+
+
+	def get_queryset(self):
+		self.category=get_object_or_404(Market, name=self.kwargs['category'])
+		return Market.objects.filter(category=self.category)
+
+	def get_context_data(self, **kwargs):
+		context=super().get_context_data(**kwargs)
+		context['category']=self.category
+		return context

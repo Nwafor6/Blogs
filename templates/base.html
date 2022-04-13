@@ -130,7 +130,7 @@
                 </ul>
             </li>
               <li><a href="#" >Advertise</a></li>
-              <li><a href="#" >Shop and Sell</a></li>
+              <li><a href="{%url 'blogs:products'%}" >Shopping Mall</a></li>
             </ul>
             </ul>
           </div>
@@ -139,7 +139,7 @@
     </nav> 
     <!-- end of second nav bar -->
    </div>
- </div>
+ </div> 
 
 
   
@@ -180,7 +180,7 @@
         </div>
         <div class="col-sm-3"><h5>Explore</h5><hr></div>
         <div class="col-sm-3"><h5>Connect with us</h5><hr>
-          <div class="jumbotron">
+          <div>
           <form method="POST">
             {%csrf_token%}
             <textarea name="message" placeholder="Enter your message......" class="form-control"> </textarea><br>

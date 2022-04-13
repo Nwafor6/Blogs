@@ -13,7 +13,7 @@ class Article(models.Model):
 	institution_name=models.CharField(max_length=100)
 	institution_website=models.CharField(max_length=100)
 	institution_acronmy=models.CharField(max_length=20)
-	post_image=models.ImageField(null=True, blank=True,upload_to='Post-img/')
+	post_image=models.ImageField(null=True, blank=True,upload_to='Post-img/', default="er.jpg")
 
 
 	@property
@@ -67,3 +67,23 @@ class Carousel (models.Model):
 	body=models.TextField()
 	def __str__(self):
 		return self.title
+
+category_choices=[
+	('Automobile', 'Automobile'),
+	('Computer', 'Computer'),
+	('Phone', 'Phone'),
+	('Others', 'Others'),
+]
+
+class Market(models.Model):
+
+	user =models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+	category=models.CharField(max_length=10, choices=category_choices)
+	product_name=models.CharField(max_length=100)
+	product_price=models.FloatField(default=10.00)
+	post=models.DateTimeField(auto_now_add=True)
+	product_image=models.ImageField(null=True, blank=True, default='view.jpg')
+	contact_details=models.IntegerField(null=True, blank=True)
+
+	def __str__(self):
+	 	return self.category

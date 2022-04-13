@@ -1,0 +1,60 @@
+{% extends 'base.html'%}
+{% block content%}
+
+<style>
+	.price{
+		background-color: red;
+		color: white;
+		font-size: 10px;
+		/*width: 30%;*/
+		margin-top: 10px;
+	}
+	.category{
+		font-size: 10px;
+		background-color: yellow;
+		color: black;
+		margin-top: 10px;
+
+	}
+	.col-sm-2 img:hover{
+		box-shadow:0 0 20px rgba(0, 0, 0, 0.3) ;
+		transition: 0.5s;
+	}
+</style>
+
+<div class="container text-center">
+	<h1 >Shopping Mall</h1> <hr>
+	<div class="row " style="margin-bottom:10px;">
+		{%for product in products%}
+		<div class="col-sm-2">
+			<h3>{{product.product_name}}</h3>
+			<a href="{%url 'blogs:product-detail' product.pk%}" ><img src="{{product.product_image.url}}" class="img-thumbnail" alt="product image" width="100" height="100"></a>
+			<p class="category">Category: {{product.category}}</p>
+			<p class="price">Price: #{{product.product_price}}</p>
+			<a href="{{product.product_image.url}}" class="btn btn-xs btn-default">Full Image here</a>
+		</div>
+		{%endfor%}
+
+	</div>
+
+	<div class="pagination"> <span class="step-links"> 
+			{% if page_obj.has_previous %}
+			<a href="?page={{ page_obj.previous_page_number }}"><span class="	glyphicon glyphicon-arrow-left"></span></a>
+			{% endif %}
+			<span class="current"> Page {{ page_obj.number }} of {{ paginator.num_pages }}. </span>
+			{% if page_obj.has_next %}
+				<a href="?page={{ page_obj.next_page_number }}"> <span class="	glyphicon glyphicon-arrow-right"></span></a> 
+			{% endif %} </span> 
+		</div>
+	
+</div>
+
+
+<!-- {{product.user}}<br><hr>
+{{product.category}}<br><hr>
+ -->
+
+
+
+
+{% endblock content%}
