@@ -24,8 +24,9 @@ urlpatterns = [
     path('carousel/', views.carousel, name='carousel'),
 
     # class based classes url
-    path('product/', MarketListView.as_view(), name='products'),
+    path('products/', MarketListView.as_view(), name='products'),
     path('product/<int:pk>/', MarketDetailView.as_view(), name='product-detail'), 
-    path('product/<category>/', CategoryDetailView.as_view(), name='category'), 
+    path('buy-form/', MarketCreationForm.as_view(), name='buy-form'), 
+    
 
  ]

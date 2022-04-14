@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 
@@ -82,8 +83,13 @@ class Market(models.Model):
 	product_name=models.CharField(max_length=100)
 	product_price=models.FloatField(default=10.00)
 	post=models.DateTimeField(auto_now_add=True)
-	product_image=models.ImageField(null=True, blank=True, default='view.jpg')
+	product_image=models.FileField(null=True, blank=True, default='view.jpg')
 	contact_details=models.IntegerField(null=True, blank=True)
 
 	def __str__(self):
 	 	return self.category
+
+
+	# def get_absolute_url(self):
+
+	# 	return reverse('products')

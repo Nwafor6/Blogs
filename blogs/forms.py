@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment,CommentReply, RoommateHelp
+from .models import Comment,CommentReply, RoommateHelp , Market
 
 
 class CommentForm(forms.ModelForm):
@@ -27,3 +27,12 @@ class RoommateHelpForm(forms.ModelForm):
 class ContactForm(forms.Form):
 
 	message=forms.CharField(max_length=1000, widget=forms.Textarea(attrs={'class':'form-control','Placeholder':'Enter Enter message here...','rows':3}))
+
+class SellForm(forms.ModelForm):
+
+	class Meta:
+
+		model=Market
+		fields= ['category', 'product_name', 'product_price', 'product_image', 'contact_details']
+
+		

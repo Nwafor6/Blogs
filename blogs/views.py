@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect,  get_object_or_404
+from django.urls import reverse
 from .models import *
-from .forms import CommentForm, ReplyForm, RoommateHelpForm, ContactForm
+from .forms import CommentForm, ReplyForm, RoommateHelpForm, ContactForm, SellForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -13,6 +14,7 @@ from django.contrib.messages import get_messages
 from django.core.mail import send_mail
 from django.conf import settings
 from django.views.generic import ListView,DetailView
+from django.views.generic.edit import FormView
 import re
 # Create your views here.
 
@@ -293,18 +295,45 @@ class MarketDetailView(DetailView):
 	template_name='blogs/market_detail.html'
 	context_object_name='product'
 
+class MarketCreationForm(FormView):
 
-class CategoryDetailView(ListView):
+	
+	form_class= SellForm
+	template_name='blogs/sell_form.html'
+	success_url='/products/'
+	
 
 
-	template_name='blogs/market_category.html'
+	def get (self, request, *args, **kwargs):
+
+		form=self.form_class()
+		return render (request, self.template_name, {'form': form})
+
+	def post (self, request, *args, **kwargs):
+		form=self.form_class(request.POST, request.FILES)
+		if form.is_valid():
+			form=Market.objects.create(
+				user= request.user,
+				category=request.POST.get('category'),
+				product_name=request.POST.get('product_name'),
+				product_price=request.POST.get('product_price'),
+				product_image=request.FILES.get('product_image'),
+				contact_details=request.POST.get('contact_details'),
+				)
+			form.save()
+			return redirect (self.success_url)
+		else:
+			return render(request, self.template_name, {'form': form})
 
 
-	def get_queryset(self):
-		self.category=get_object_or_404(Market, name=self.kwargs['category'])
-		return Market.objects.filter(category=self.category)
 
-	def get_context_data(self, **kwargs):
-		context=super().get_context_data(**kwargs)
-		context['category']=self.category
-		return context
+	# def form_valid(self, form):
+	# 	form.instance.user = self.request.user
+	# 	form.instance.product_image= self.request.FILES.get('product_image')
+
+	# 	form.save()
+			
+	# 	return super().form_valid(form)
+
+
+
