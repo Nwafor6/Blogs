@@ -29,7 +29,6 @@ class ContactForm(forms.Form):
 	message=forms.CharField(max_length=1000, widget=forms.Textarea(attrs={'class':'form-control','Placeholder':'Enter Enter message here...','rows':3}))
 
 class SellForm(forms.ModelForm):
-
 	class Meta:
 
 		model=Market

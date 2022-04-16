@@ -58,9 +58,9 @@
            </div>
          </div>
          <div class="col-lg-6 col-md-8 col-sm-7">
-           <form method="GET" action="https://myschool.ng/search" accept-charset="UTF-8">
+           <form method="GET" action="{% url 'blogs:post'%}" accept-charset="UTF-8">
             <div class="input-group">
-              <input type="text" name="search_string" class="form-control" placeholder="Enter your search keywords here...">
+              <input type="text" name="q" class="form-control" placeholder="Enter your search keywords here...">
               <span class="input-group-btn">
                 <button class="btn btn-secondary" type="submit"><span class="glyphicon glyphicon-search"></span></button>
               </span>
@@ -121,7 +121,7 @@
                   <li><a a href="#section9">State Colledges</a></li>
                 </ul>
             </li>
-            <li><a href="#">Our Services</a>
+            <li><a href="#">post your Article</a>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Scholarships<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a a href="#section10">International Scholarships</a></li>
@@ -129,10 +129,14 @@
                   <li><a a href="#section11">National Schoarships</a></li>
                 </ul>
             </li>
-              <li><a href="#" >Advertise</a></li>
-              <li><a href="{%url 'blogs:products'%}" >Shopping Mall</a></li>
-            </ul>
-            </ul>
+            <li><a href="#" >Advertise</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Shopping Mall<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="{%url 'blogs:products'%}">Buy Item</a></li>
+                  <li class="divider"></li>
+                  <li><a a href="{% url 'blogs:buy-form'%}">Sell Item</a></li>
+                </ul>
+            </li>
           </div>
         </div>
       </div>
@@ -192,6 +196,7 @@
       </div>
     </div>
   </div>
+
 <!-- Footer ended here -->
       
 </body>

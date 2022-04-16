@@ -69,14 +69,12 @@
        <div class="panel panel-default">
          <div class="panel-heading text-center"><h4>Related Posts</h4></div>
           <div class="panel-body">
-            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
+            {%for post in post%}
+            <p>
+              <a href="">{{post.headline}}</a>
             </p><hr>
-            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
-            </p><hr>
-            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
-            </p><hr>
-            <p><a href="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</a>
-            </p>
+            {%endfor%}
+            
           </div>
           <div class="panel-footer"><h6>Place order</h6></div>
        </div>

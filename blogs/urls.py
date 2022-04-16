@@ -1,6 +1,7 @@
 from .import views
 from .views import *
 from django.urls import path 
+from django.contrib.auth.decorators import login_required
 app_name = 'blogs'
 urlpatterns = [
     
@@ -9,6 +10,7 @@ urlpatterns = [
     path('register/', views.registerPage, name='register'),
 
     path('', views.post, name='post'),
+    # path('footer/', views.footerDisplay, name='footer'),
     path('about/', views.about, name='about'),
     path('post_detil/<str:pk>/', views.post_detil, name='post_detil'),
     path('update_detil/<str:pk>/', views.updatecomment, name='update_detil'),
@@ -26,7 +28,7 @@ urlpatterns = [
     # class based classes url
     path('products/', MarketListView.as_view(), name='products'),
     path('product/<int:pk>/', MarketDetailView.as_view(), name='product-detail'), 
-    path('buy-form/', MarketCreationForm.as_view(), name='buy-form'), 
+    path('buy-form/', login_required(MarketCreationForm.as_view(), login_url='blogs:login'), name='buy-form'), 
     
 
  ]

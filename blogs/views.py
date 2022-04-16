@@ -76,11 +76,16 @@ def registerPage(request):
 
 #Working Perfectly
 def post(request):
-	post=Article.objects.order_by('-pub_date')
-	footerDisplay=Article.objects.all()[:3]
-	context={'post':post, 'footerDisplay':footerDisplay}
+	q=request.GET.get('q') if request.GET.get('q') !=None else''
+	post=Article.objects.filter(headline__icontains=q)
+	context={'post':post, }
 	return render (request, 'blogs/index.html', context)
 
+
+# def footerDisplay(request):
+# 	content=Article.objects.all()[:7]
+# 	context={'content1':content}
+# 	return render(request, 'blogs/navtemplate.html', context)
 
 
 
@@ -200,6 +205,7 @@ def updatereply(request, pk):
 def about (request):
 	return render(request, "blogs/about.html")
 
+
 # @user_passes_test(email_check, login_url="blogs:login")
 def post_detil (request, pk):
 	post=Article.objects.all()
@@ -209,12 +215,6 @@ def post_detil (request, pk):
 	# new_comment=None
 	if request.method == 'POST':
 		if comment.is_valid():
-			# new_comment=comment.save(commit=False)
-			# new_comment.detil=detil
-			# new_comment.user=request.user
-			# if new_comment.image==True:
-			# 	new_comment.delete()
-
 			comment=Comment.objects.create(
 				user=request.user,
 				detil=detil,
@@ -228,7 +228,7 @@ def post_detil (request, pk):
 		form=CommentForm()
 	#count the number of comments 
 	count=comments.count()
-	context={'count':count, 'detil':detil, 'post':post, 'comments':comments,'form':form, }
+	context={'count':count, 'detil':detil, 'post':post, 'comments':comments,'form':form}
 	return render(request, 'blogs/post_detil.html',context)
 # EduBlog Help Section
 def roomMate(request):
@@ -286,14 +286,22 @@ class MarketListView(ListView):
 
 	model=Market
 	template_name='blogs/market.html'
-	paginate_by = 2
+	paginate_by = 7
 	context_object_name='products'
+
+
 
 class MarketDetailView(DetailView):
 
 	model=Market
 	template_name='blogs/market_detail.html'
 	context_object_name='product'
+
+
+
+
+
+
 
 class MarketCreationForm(FormView):
 
@@ -310,7 +318,7 @@ class MarketCreationForm(FormView):
 		return render (request, self.template_name, {'form': form})
 
 	def post (self, request, *args, **kwargs):
-		form=self.form_class(request.POST, request.FILES)
+		form=SellForm(request.POST, request.FILES)
 		if form.is_valid():
 			form=Market.objects.create(
 				user= request.user,
@@ -324,6 +332,40 @@ class MarketCreationForm(FormView):
 			return redirect (self.success_url)
 		else:
 			return render(request, self.template_name, {'form': form})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
