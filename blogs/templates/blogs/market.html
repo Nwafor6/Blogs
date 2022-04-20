@@ -8,12 +8,14 @@
 		font-size: 10px;
 		/*width: 30%;*/
 		margin-top: 10px;
+		width: 10%;
 	}
 	.category{
 		font-size: 10px;
 		background-color: yellow;
 		color: black;
 		margin-top: 10px;
+		width: 10%;
 
 	}
 	.col-sm-2 img:hover{
@@ -22,18 +24,20 @@
 	}
 </style>
 
-<div class="container text-center">
+<div class="container">
 	<h1 >Shopping Mall</h1>
 	 <hr>
 	<div class="row " style="margin-bottom:10px;">
 		{%for product in products%}
-		<div class="col-sm-2">
+		<div >
 			<h3>{{product.product_name}}</h3>
+			{% if product.product_image %}
 			<a href="{%url 'blogs:product-detail' product.pk%}" ><img src="{{product.product_image.url}}" class="img-thumbnail" alt="product image" width="100" height="100"></a>
+			{% endif%}
 			<p class="category">Category: {{product.category}}</p>
 			<p class="price">Price: #{{product.product_price}}</p>
 			<a href="{{product.product_image.url}}" class="btn btn-xs btn-default">Full Image here</a>
-		</div>
+		</div><hr>
 		{%endfor%}
 
 	</div>

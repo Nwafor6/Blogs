@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  Article, Comment, CommentReply, RoommateHelp,Carousel, Market
+from .models import  *
 
 # Register your models here.
 class AminArticle(admin.ModelAdmin):
@@ -12,3 +12,4 @@ admin.site.register(CommentReply)
 admin.site.register(RoommateHelp)
 admin.site.register(Carousel)
 admin.site.register(Market)
+

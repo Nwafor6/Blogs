@@ -4,61 +4,62 @@
 
 {%load static%}
 {%block content%} 
+<style>
+body{
+  min-height:100vh;
+  width: 100%;
+  background-image: linear-gradient(rgba(4, 9, 30, 0.7),rgba(4, 9, 30, 0.7)), url({% static "blogs/images/er.png"%});
+  background-position: center;
+  background-size: cover;
+  position: relative;
+
+}
+body ,h3 p{
+  color: white;
+}
+.Scholarships .col-sm-4:hover{
+   background-color: ;
+   box-shadow: 0 5px 20px rgb(224, 255, 255);
+   transition: 0.5s;
    
-        <!-- <div class="container-fluid bg-info" style="margin-bottom: 10px;">
-          <h2 class="text-center">Trending News</h2>
-          <div class="row" style="display: flex;">
-             {% for post in post%}
-            <div class="card" style="width:400px; margin:10px;margin-bottom: 10px; padding: 10px;" >
-              <img class="card-img-top" src="{{post.post_image.url}}" alt="Card image" width="300" height="200">
-              <div class="card-body">
-                <h4 class="card-title"><a class="btn btn-info btn-xs disabled">{{post.pub_date|timesince}}</a> | {{post.headline}} </h4>
-                <p class="card-text">{{post.content| slice:":200"}}.....</p>
-                <a href="{% url 'blogs:post_detil' post.pk%}" class="btn btn-primary">More</a>
-              </div>
-            </div>
-            {% endfor%}
-          </div>
-        </div>
- -->
-
-
-
+}
+</style>
  
  <!-- End of Carousel -->
 
  <div class="container"style="margin-bottom: 10px;">
    <div class="row">
-    <h3 class="text-center text-danger">News Updates</h3><hr>
-     <div class="col-sm-4">
-      <h5>Latest University News</h5><hr>
+     <div id="section1" class="col-sm-9">
+       <h2 class="text-center text-primary">Trending</h2>
       {% for post in post%}
-      <p><a href="{% url 'blogs:post_detil' post.pk%}" >{{post.headline}}</a></p><hr>
+      <div class="container-fluid">
+        <div class="row">
+            <div><hr>
+              <div class="col-sm-2" style="margin-bottom:10px;"> <img src="{{post.post_image.url}}" width="100" height="100"></div>
+              <div class="col-sm-8" > 
+                <h4><a href="{% url 'blogs:post_detil' post.pk%}" >{{post.headline}}</a></h4>
+                <p>{{post.content|slice:":300"|safe}}....</p>
+                <a href="" style="margin-bottom: 0px; color : white;">{{post.institution_website|safe}} | {{post.institution_acronmy}}</a>
+              </div>
+            </div>
+        </div>
+      </div>
       {% endfor%}
      </div>
-     <div id="section1" class="col-sm-4">
-       <h5>Latest Academic News</h5><hr>
-       <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-     </div>
-     <div id="section5" class="col-sm-4">
-        <h5>Latest Polytechnic News</h5><hr>
-       <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
-      <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
+     <div id="section1" class="col-sm-3">
+        <div class="panel panel-default">
+          <div class="panel-heading text-center"><h3>Latest University News</h3></div>
+              <div class="panel-body text-primary">
+                   <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
+                  <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
+                  <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
+                  <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
+                  <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
+                  <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
+                  <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
+                  <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
+              </div>
+        </div>
      </div>
    </div>
  </div>
@@ -128,29 +129,47 @@
 </div>
 </div>
 <!-- Besfining of scholarship news -->
-<div class="container">
+<div class="container Scholarships" style=" margin-top: 4rem; margin-bottom: 20px;">
   <div class="row">
     <h3 class="text-center text-info">Scholarships for Nigerian Students</h3><hr>
     <div id="section10" class="col-sm-4">
-        <h5>International Scholarships</h5><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
+        <div class="panel panel-default">
+          <div class="panel-heading text-center"><h4>International Scholarships</h4></div>
+          <div class="panel-body text-primary">
+            <ul>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                </ul>
+          </div>
+      </div>
     </div>
-    <div id="section11" class="col-sm-4">
-        <h5>Local Scholarships</h5><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
+    <div id="section11" class="col-sm-4" >
+          <div class="panel panel-default">
+              <div class="panel-heading text-center">  <h4>Local Scholarships</h4></div>
+              <div class="panel-body text-primary">
+                <ul>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                </ul>
+              </div>
+        </div>
     </div>
     <div class="col-sm-4">
-        <h5>All Scholarships</h5><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
-        <p>Presidential Scholarships at Alvernia University, USA - 2022</p><hr>
+         <div class="panel panel-default">
+              <div class="panel-heading text-center" ><h4>All Scholarships</h4></div>
+              <div class="panel-body text-primary">
+                <ul>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                  <li>Presidential Scholarships at Alvernia University, USA - 2022</li><hr>
+                </ul>
+              </div>
+        </div> 
     </div>
   </div>
 </div>

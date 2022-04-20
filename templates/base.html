@@ -70,6 +70,7 @@
          <div class="col-lg-3 text-right ">
           <div>
             {% if request.user.is_authenticated %}
+            <a class="btn  btn-xs disablled" style="color:white;">Welcome {{user.get_username}}</a>
            <a href="{% url 'blogs:logout'%}"class="btn btn-default btn-sm">Logout</a>
            {%else%}
            <a href="{% url 'blogs:login'%}"class="btn btn-default btn-sm">Login</a>
@@ -195,6 +196,9 @@
         </div>
       </div>
     </div>
+    {% if request.user.is_authenticated %}
+    <p >You are logged in as {{user.first_name}}</p>
+    {%endif%}
   </div>
 
 <!-- Footer ended here -->

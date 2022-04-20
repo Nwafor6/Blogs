@@ -5,6 +5,7 @@ from django.urls import reverse
 # Create your models here.
 
 
+
 class Article(models.Model):
 	reporter=models.ForeignKey(User, on_delete=models.CASCADE , blank=True , null=True)
 	pub_date=models.DateTimeField()
