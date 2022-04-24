@@ -8,14 +8,19 @@
 body{
   min-height:100vh;
   width: 100%;
-  background-image: linear-gradient(rgba(4, 9, 30, 0.7),rgba(4, 9, 30, 0.7)), url({% static "blogs/images/er.png"%});
+  background-image: linear-gradient(rgba(4, 9, 30, 0.7),rgba(4, 9, 30, 0.7)), url({% static "blogs/images/logo1.jpg"%});
   background-position: center;
-  background-size: cover;
-  position: relative;
+  background-size: contain;
+  position:relative;
+  background-repeat: no-repeat;
+
 
 }
-body ,h3 p{
+body , h3, p{
   color: white;
+}
+.panel-body p{
+  color: blue;
 }
 .Scholarships .col-sm-4:hover{
    background-color: ;
@@ -46,10 +51,10 @@ body ,h3 p{
       </div>
       {% endfor%}
      </div>
-     <div id="section1" class="col-sm-3">
+     <div id="section1" class="col-sm-3" s>
         <div class="panel panel-default">
-          <div class="panel-heading text-center"><h3>Latest University News</h3></div>
-              <div class="panel-body text-primary">
+          <div class="panel-heading text-center" ><h3 class="text-primary">Latest University News</h3></div>
+              <div class="panel-body text-primary" >
                    <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
                   <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>
                   <p> KWASU admitted candidates with incomplete registration status, 2021/2022</p><hr>

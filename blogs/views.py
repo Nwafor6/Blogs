@@ -13,8 +13,8 @@ from django.contrib import messages
 from django.contrib.messages import get_messages
 from django.core.mail import send_mail
 from django.conf import settings
-from django.views.generic import ListView,DetailView
-from django.views.generic.edit import FormView
+from django.views.generic import ListView,DetailView, TemplateView
+from django.views.generic.edit import FormView, CreateView
 import re
 # Create your views here.
 
@@ -81,11 +81,6 @@ def post(request):
 	context={'post':post, }
 	return render (request, 'blogs/index.html', context)
 
-
-# def footerDisplay(request):
-# 	content=Article.objects.all()[:7]
-# 	context={'content1':content}
-# 	return render(request, 'blogs/navtemplate.html', context)
 
 
 
@@ -282,13 +277,30 @@ def contact(request):
 	return render(request, 'blogs/index.html')
 
 
-class MarketListView(ListView):
+# class MarketListView(ListView):
 
-	model=Market
+# 	model=Market
+# 	template_name='blogs/market.html'
+# 	paginate_by = 7
+# 	context_object_name='products'
+
+class MarkeTemplateView(TemplateView):
+
 	template_name='blogs/market.html'
 	paginate_by = 7
-	context_object_name='products'
 
+	
+
+	def search(request):
+
+		q=request.GET.get('q') if request.GET.get('q') !=None else''
+		products=Market.objects.filter(product_name__icontains=q)
+		return render (request, 'blogs/index.html')
+
+	def get_context_data(self, **kwargs):
+		context=super().get_context_data(**kwargs)
+		context['products']=Market.objects.all()
+		return context
 
 
 class MarketDetailView(DetailView):
@@ -303,39 +315,63 @@ class MarketDetailView(DetailView):
 
 
 
-class MarketCreationForm(FormView):
+# class MarketCreationForm(FormView):
 
 	
+# 	form_class= SellForm
+# 	template_name='blogs/sell_form.html'
+# 	success_url='/products/'
+	
+
+
+# 	def get (self, request, *args, **kwargs):
+
+# 		form=self.form_class()
+# 		return render (request, self.template_name, {'form': form})
+
+# 	def post (self, request, *args, **kwargs):
+# 		form=SellForm(request.POST, request.FILES)
+# 		if form.is_valid():
+# 			form=Market.objects.create(
+# 				user= request.user,
+# 				category=request.POST.get('category'),
+# 				product_name=request.POST.get('product_name'),
+# 				product_price=request.POST.get('product_price'),
+# 				product_image=request.FILES.get('product_image'),
+# 				contact_details=request.POST.get('contact_details'),
+# 				)
+# 			form.save()
+# 			return redirect (self.success_url)
+# 		else:
+# 			return render(request, self.template_name, {'form': form})
+
+
+
+class MarketCreationForm(CreateView):
 	form_class= SellForm
 	template_name='blogs/sell_form.html'
 	success_url='/products/'
-	
-
-
-	def get (self, request, *args, **kwargs):
-
-		form=self.form_class()
-		return render (request, self.template_name, {'form': form})
 
 	def post (self, request, *args, **kwargs):
 		form=SellForm(request.POST, request.FILES)
 		if form.is_valid():
-			form=Market.objects.create(
-				user= request.user,
-				category=request.POST.get('category'),
-				product_name=request.POST.get('product_name'),
-				product_price=request.POST.get('product_price'),
-				product_image=request.FILES.get('product_image'),
-				contact_details=request.POST.get('contact_details'),
-				)
+			form.instance.product_image=self.request.FILES.get('product_image')
+
 			form.save()
-			return redirect (self.success_url)
-		else:
-			return render(request, self.template_name, {'form': form})
+		return render(request, self.success_url)
+	
+
+	
+
+	# def form_valid(self, form):
+	# 	form.instance.user = self.request.user 
+		
+	# 	return super().form_valid(form)
 
 
 
 
+	
 
 
 

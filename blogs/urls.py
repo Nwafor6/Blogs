@@ -26,7 +26,8 @@ urlpatterns = [
     path('carousel/', views.carousel, name='carousel'),
 
     # class based classes url
-    path('products/', MarketListView.as_view(), name='products'),
+    # path('products/', MarketListView.as_view(), name='products'),
+      path('products/', MarkeTemplateView.as_view(), name='products'),
     path('product/<int:pk>/', MarketDetailView.as_view(), name='product-detail'), 
     path('buy-form/', login_required(MarketCreationForm.as_view(), login_url='blogs:login'), name='buy-form'), 
     

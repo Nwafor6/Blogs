@@ -40,8 +40,10 @@
 								<div style="padding: 10px;">
 									<h4><span class="glyphicon glyphicon-user"></span> {{post.user}}  <span class="badge"> {{post.created|timesince}}</h4>
 									<p>{{post.message}}</span></p><hr>
+									{% if request.user == post.user%}
 									<a href="{% url 'blogs:Edu-help-edit' post.id%}" class="btn btn-primary btn-sm">Edit Post</a>
 									<a href="{% url 'blogs:Edu-help-del' post.id%}" class="btn btn-primary btn-sm">Delete Post</a>
+									{% endif%}
 								</div>
 								{% endfor%}
 							</div>
