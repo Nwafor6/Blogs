@@ -84,7 +84,7 @@ class Market(models.Model):
 	product_name=models.CharField(max_length=100)
 	product_price=models.FloatField(default=10.00)
 	post=models.DateTimeField(auto_now_add=True)
-	product_image=models.FileField(null=True, blank=True, default='view.jpg')
+	product_image=models.ImageField(null=True, blank=True, default='default-img.png', upload_to='comment-img/')
 	contact_details=models.IntegerField(null=True, blank=True)
 
 	def __str__(self):

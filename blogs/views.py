@@ -225,6 +225,8 @@ def post_detil (request, pk):
 	count=comments.count()
 	context={'count':count, 'detil':detil, 'post':post, 'comments':comments,'form':form}
 	return render(request, 'blogs/post_detil.html',context)
+
+
 # EduBlog Help Section
 def roomMate(request):
 	roommate=RoommateHelp.objects.all()
@@ -347,19 +349,44 @@ class MarketDetailView(DetailView):
 
 
 
-class MarketCreationForm(CreateView):
-	form_class= SellForm
-	template_name='blogs/sell_form.html'
-	success_url='/products/'
+# class MarketCreationForm(CreateView):
+# 	form_class= SellForm
+# 	template_name='blogs/sell_form.html'
+# 	success_url='/products/'
 
-	def post (self, request, *args, **kwargs):
-		form=SellForm(request.POST, request.FILES)
+# 	def post (self, request, *args, **kwargs):
+# 		form=SellForm(request.POST, request.FILES)
+# 		if form.is_valid():
+# 			# form.instance.product_image=self.request.FILES.get('product_image')
+# 			form=Market.objects.create(
+# 				user= request.user,
+# 				category=request.POST.get('category'),
+# 				product_name=request.POST.get('product_name'),
+# 				product_price=request.POST.get('product_price'),
+# 				product_image=request.FILES.get('product_image'),
+# 				contact_details=request.POST.get('contact_details'),
+# 				)
+
+# 			form.save()
+# 		return render(request, self.success_url)
+
+def MarketCreationForm(request):
+
+	form= SellForm()
+	if request.method == 'POST':
+		form= SellForm(request.POST, request.FILES)
 		if form.is_valid():
-			form.instance.product_image=self.request.FILES.get('product_image')
-
+			form=Market.objects.create(
+			user= request.user,
+			category=request.POST.get('category'),
+			product_name=request.POST.get('product_name'),
+			product_price=request.POST.get('product_price'),
+			product_image=request.FILES.get('product_image'),
+			contact_details=request.POST.get('contact_details'),
+			)
 			form.save()
-		return render(request, self.success_url)
-	
+			return redirect('blogs:products')
+	return render(request, 'blogs/sell_form.html', {'form': form})
 
 	
 
