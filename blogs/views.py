@@ -15,6 +15,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.views.generic import ListView,DetailView, TemplateView
 from django.views.generic.edit import FormView, CreateView
+from django.contrib.auth.mixins import PermissionRequiredMixin
 import re
 # Create your views here.
 
@@ -210,13 +211,15 @@ def post_detil (request, pk):
 	# new_comment=None
 	if request.method == 'POST':
 		if comment.is_valid():
-			comment=Comment.objects.create(
-				user=request.user,
-				detil=detil,
-				body=request.POST.get('body'),
-				comment_image=request.FILES.get('comment_image')
-				)
-
+			if request.user.is_authenticated:
+				comment=Comment.objects.create(
+					user=request.user,
+					detil=detil,
+					body=request.POST.get('body'),
+					comment_image=request.FILES.get('comment_image')
+					)
+			else:
+				return redirect('blogs:login')
 		
 		return HttpResponseRedirect(reverse('blogs:post_detil', args=[str(detil.pk)]))
 	else:
@@ -347,46 +350,40 @@ class MarketDetailView(DetailView):
 # 		else:
 # 			return render(request, self.template_name, {'form': form})
 
+class Myperm(PermissionRequiredMixin):
+	redirect_field_name='blogs:buy-form'
 
 
-# class MarketCreationForm(CreateView):
-# 	form_class= SellForm
-# 	template_name='blogs/sell_form.html'
-# 	success_url='/products/'
+class MarketCreationForm(Myperm,CreateView):
+	form_class= SellForm
+	template_name='blogs/sell_form.html'
+	success_url='/products/'
 
-# 	def post (self, request, *args, **kwargs):
-# 		form=SellForm(request.POST, request.FILES)
-# 		if form.is_valid():
-# 			# form.instance.product_image=self.request.FILES.get('product_image')
-# 			form=Market.objects.create(
-# 				user= request.user,
-# 				category=request.POST.get('category'),
-# 				product_name=request.POST.get('product_name'),
-# 				product_price=request.POST.get('product_price'),
-# 				product_image=request.FILES.get('product_image'),
-# 				contact_details=request.POST.get('contact_details'),
-# 				)
-
-# 			form.save()
-# 		return render(request, self.success_url)
-
-def MarketCreationForm(request):
-
-	form= SellForm()
-	if request.method == 'POST':
-		form= SellForm(request.POST, request.FILES)
+	def post (self, request, *args, **kwargs):
+		form=SellForm(request.POST, request.FILES)
 		if form.is_valid():
-			form=Market.objects.create(
-			user= request.user,
-			category=request.POST.get('category'),
-			product_name=request.POST.get('product_name'),
-			product_price=request.POST.get('product_price'),
-			product_image=request.FILES.get('product_image'),
-			contact_details=request.POST.get('contact_details'),
-			)
+			form.instance.user=self.request.user
 			form.save()
-			return redirect('blogs:products')
-	return render(request, 'blogs/sell_form.html', {'form': form})
+			return redirect (self.success_url)
+		return render(request, self.template_name, {'form': form})
+
+# def MarketCreationForm(request):
+
+# 	form= SellForm()
+# 	if request.method == 'POST':
+# 		form= SellForm(request.POST, request.FILES)
+# 		if form.is_valid():
+# 			form=Market.objects.create(
+# 			user= request.user,
+# 			category=request.POST.get('category'),
+# 			product_name=request.POST.get('product_name'),
+# 			product_price=request.POST.get('product_price'),
+# 			product_image=request.FILES.get('product_image'),
+# 			contact_details=request.POST.get('contact_details'),
+# 			)
+# 			form.save()
+# 			return redirect('blogs:products')
+# 	return render(request, 'blogs/sell_form.html', {'form': form})
 
 	
 

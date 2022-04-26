@@ -87,6 +87,12 @@ class Market(models.Model):
 	product_image=models.ImageField(null=True, blank=True, default='default-img.png', upload_to='comment-img/')
 	contact_details=models.IntegerField(null=True, blank=True)
 
+	@property
+	def image_url(self):
+		if self.product_image and hasattr(self.product_image, 'url'):
+			return self.product_image
+		return None
+
 	def __str__(self):
 	 	return self.category
 

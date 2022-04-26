@@ -4,7 +4,7 @@ from .models import Comment,CommentReply, RoommateHelp , Market
 
 class CommentForm(forms.ModelForm):
 	# user= forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class':'form-control', 'Placeholder':'Enter Username' }))
-	body=forms.CharField(max_length=100, widget=forms.Textarea(attrs={'class':'form-control','Placeholder':'Comment here','rows':3}))
+	body=forms.CharField(max_length=100, widget=forms.Textarea(attrs={'class':'form-control','Placeholder':'Login to drop a comment here....','rows':3}))
 	class Meta:
 		model=Comment
 		comment_image= forms.ImageField(required=False)

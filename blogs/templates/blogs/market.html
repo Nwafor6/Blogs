@@ -36,11 +36,16 @@
 			<h3>{{product.product_name}}</h3>
 			{% if product.product_image %}
 			<a href="{%url 'blogs:product-detail' product.pk%}" ><img src="{{product.product_image.url}}" class="img-thumbnail" alt="product image" width="100" height="100"></a>
-			{% endif%}
 			<p class="category">Category: {{product.category}}</p>
 			<p class="price">Price: #{{product.product_price}}</p>
 			<a href="{{product.product_image.url}}" class="btn btn-xs btn-default">Full Image here</a>
+			{%else%}
+			<p class="category">Category: {{product.category}}</p>
+			<p class="price">Price: #{{product.product_price}}</p>
+			<a href="" class="btn btn-xs btn-default">Full Image here</a>
+			{%endif%}
 		</div><hr>
+		
 		{%endfor%}
 
 	</div>
@@ -66,3 +71,5 @@
 
 
 {% endblock content%}
+
+<!--  -->
