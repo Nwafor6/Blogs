@@ -27,9 +27,9 @@ urlpatterns = [
 
     # class based classes url
     # path('products/', MarketListView.as_view(), name='products'),
-      path('products/', MarkeTemplateView.as_view(), name='products'),
+    path('products/', MarkeTemplateView.as_view(), name='products'),
     path('product/<int:pk>/', MarketDetailView.as_view(), name='product-detail'), 
-    path('buy-form/', login_required(MarketCreationForm.as_view(), login_url='blogs:login'), name='buy-form'), 
+    path('buy-form/', MarketCreationForm.as_view(),  name='buy-form'), 
     # path('buy-form/', views.MarketCreationForm, name='buy-form'), 
     
 

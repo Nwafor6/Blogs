@@ -350,11 +350,8 @@ class MarketDetailView(DetailView):
 # 		else:
 # 			return render(request, self.template_name, {'form': form})
 
-class Myperm(PermissionRequiredMixin):
-	redirect_field_name='blogs:buy-form'
 
-
-class MarketCreationForm(Myperm,CreateView):
+class MarketCreationForm(CreateView):
 	form_class= SellForm
 	template_name='blogs/sell_form.html'
 	success_url='/products/'
