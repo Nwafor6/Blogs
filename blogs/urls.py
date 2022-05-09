@@ -28,8 +28,10 @@ urlpatterns = [
     # class based classes url
     # path('products/', MarketListView.as_view(), name='products'),
     path('products/', MarkeTemplateView.as_view(), name='products'),
+    path('products/<int:pk>/', MarketUpdateview.as_view(),  name='products'),
+    path('del-products/<int:pk>/', Marketdeleteview.as_view(),  name='del-products'),
     path('product/<int:pk>/', MarketDetailView.as_view(), name='product-detail'), 
-    path('buy-form/', MarketCreationForm.as_view(),  name='buy-form'), 
+    path('buy-form/', MarketCreationForm.as_view(),  name='buy-form'),  
     # path('buy-form/', views.MarketCreationForm, name='buy-form'), 
     
 

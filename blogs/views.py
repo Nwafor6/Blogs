@@ -14,7 +14,7 @@ from django.contrib.messages import get_messages
 from django.core.mail import send_mail
 from django.conf import settings
 from django.views.generic import ListView,DetailView, TemplateView
-from django.views.generic.edit import FormView, CreateView
+from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 import re
 # Create your views here.
@@ -233,11 +233,12 @@ def post_detil (request, pk):
 # EduBlog Help Section
 def roomMate(request):
 	roommate=RoommateHelp.objects.all()
-	form=RoommateHelpForm()
+	form=RoommateHelpForm(request.POST, request.FILES)
 	if request.method=='POST':
 		form=RoommateHelp.objects.create(
 			user=request.user,
-			message=request.POST.get('message')
+			message=request.POST.get('message'),
+			
 			)
 		return redirect('blogs:Edu-help')
 	context={'roommate':roommate, 'form':form, }
@@ -282,30 +283,23 @@ def contact(request):
 	return render(request, 'blogs/index.html')
 
 
-# class MarketListView(ListView):
-
-# 	model=Market
-# 	template_name='blogs/market.html'
-# 	paginate_by = 7
-# 	context_object_name='products'
 
 class MarkeTemplateView(TemplateView):
 
 	template_name='blogs/market.html'
-	paginate_by = 7
-
+	model=Market
+	
 	
 
-	def search(request):
-
-		q=request.GET.get('q') if request.GET.get('q') !=None else''
+	def get(self,request, *args, **kwargs):
+		q=request.GET.get('q') if request.GET.get('q') !=None else ''
+		# products=Market.objects.all()[:3]
 		products=Market.objects.filter(product_name__icontains=q)
-		return render (request, 'blogs/index.html')
+		return render (request, self.template_name, {'products':products})
 
-	def get_context_data(self, **kwargs):
-		context=super().get_context_data(**kwargs)
-		context['products']=Market.objects.all()
-		return context
+
+
+
 
 
 class MarketDetailView(DetailView):
@@ -314,41 +308,6 @@ class MarketDetailView(DetailView):
 	template_name='blogs/market_detail.html'
 	context_object_name='product'
 
-
-
-
-
-
-
-# class MarketCreationForm(FormView):
-
-	
-# 	form_class= SellForm
-# 	template_name='blogs/sell_form.html'
-# 	success_url='/products/'
-	
-
-
-# 	def get (self, request, *args, **kwargs):
-
-# 		form=self.form_class()
-# 		return render (request, self.template_name, {'form': form})
-
-# 	def post (self, request, *args, **kwargs):
-# 		form=SellForm(request.POST, request.FILES)
-# 		if form.is_valid():
-# 			form=Market.objects.create(
-# 				user= request.user,
-# 				category=request.POST.get('category'),
-# 				product_name=request.POST.get('product_name'),
-# 				product_price=request.POST.get('product_price'),
-# 				product_image=request.FILES.get('product_image'),
-# 				contact_details=request.POST.get('contact_details'),
-# 				)
-# 			form.save()
-# 			return redirect (self.success_url)
-# 		else:
-# 			return render(request, self.template_name, {'form': form})
 
 
 class MarketCreationForm(CreateView):
@@ -364,30 +323,23 @@ class MarketCreationForm(CreateView):
 			return redirect (self.success_url)
 		return render(request, self.template_name, {'form': form})
 
-# def MarketCreationForm(request):
+class MarketUpdateview(UpdateView):
+	model=Market
+	form_class=SellForm
+	template_name='blogs/sell_form.html'
+	success_url='/products/'
 
-# 	form= SellForm()
-# 	if request.method == 'POST':
-# 		form= SellForm(request.POST, request.FILES)
-# 		if form.is_valid():
-# 			form=Market.objects.create(
-# 			user= request.user,
-# 			category=request.POST.get('category'),
-# 			product_name=request.POST.get('product_name'),
-# 			product_price=request.POST.get('product_price'),
-# 			product_image=request.FILES.get('product_image'),
-# 			contact_details=request.POST.get('contact_details'),
-# 			)
-# 			form.save()
-# 			return redirect('blogs:products')
-# 	return render(request, 'blogs/sell_form.html', {'form': form})
+class Marketdeleteview(DeleteView):
+	model=Market
+	form_class=SellForm
+	template_name='blogs/delete.html'
+	success_url='/products/'
 
-	
 
-	# def form_valid(self, form):
-	# 	form.instance.user = self.request.user 
-		
-	# 	return super().form_valid(form)
+
+
+
+#
 
 
 

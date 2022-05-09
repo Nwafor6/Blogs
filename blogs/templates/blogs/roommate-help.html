@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% load static%}
+{% load crispy_forms_tags%}
 {% block content%}
 <style>
 	.rough-div{
@@ -31,7 +32,8 @@
 						<div class=" text-center">
 							<form method="POST">
 								{% csrf_token%}
-								{{form.message}}
+								{{form.message}}<br>
+								{{form.help_file}}<br>
 								<button type="submit" class="btn btn-sm btn-primary" style="margin-top: 10px; margin-bottom: 10px;">Post Message</button>
 							</form>
 							<!-- display posts -->
@@ -39,7 +41,10 @@
 								{% for post in roommate%}
 								<div style="padding: 10px;">
 									<h4><span class="glyphicon glyphicon-user"></span> {{post.user}}  <span class="badge"> {{post.created|timesince}}</h4>
-									<p>{{post.message}}</span></p><hr>
+									<p>{{post.message}}</span></p>
+									{%if post.help_file%}
+									<p><img src="{{post.help_file.url}}"></p><hr>
+									{%endif%}}
 									{% if request.user == post.user%}
 									<a href="{% url 'blogs:Edu-help-edit' post.id%}" class="btn btn-primary btn-sm">Edit Post</a>
 									<a href="{% url 'blogs:Edu-help-del' post.id%}" class="btn btn-primary btn-sm">Delete Post</a>

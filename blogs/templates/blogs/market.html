@@ -26,9 +26,18 @@
 
 <div class="container">
 	<h1 >Shopping Mall</h1>
-	<form>
-		<input type="text" name="q">
-	</form>
+	<!-- <form method="GET">
+		<button ><input type="text" name="q" ><span class="glyphicon glyphicon-search"></span></button>
+		
+	</form> -->
+	 <form method="GET"  accept-charset="UTF-8" style="width:50%;">
+            <div class="input-group">
+              <input type="text" name="q" class="form-control" placeholder="search for products...">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+              </span>
+            </div>
+          </form>
 	 <hr>
 	<div class="row " style="margin-bottom:10px;">
 		{%for product in products%}
@@ -38,7 +47,17 @@
 			<a href="{%url 'blogs:product-detail' product.pk%}" ><img src="{{product.product_image.url}}" class="img-thumbnail" alt="product image" width="100" height="100"></a>
 			<p class="category">Category: {{product.category}}</p>
 			<p class="price">Price: #{{product.product_price}}</p>
-			<a href="{{product.product_image.url}}" class="btn btn-xs btn-default">Full Image here</a>
+			<div class="btn-group">
+			  <button type="button" class="btn btn-primary"><a href="{{product.product_image.url}}" style="color:white;">Full Image here</a> </button>
+			  {%if request.user == product.user%}
+			  <button type="button" class="btn btn-primary"><a href="{% url 'blogs:products' product.pk%}"style="color:white;">Edit</a></button>
+			  <button type="button" class="btn btn-primary"><a href="{% url 'blogs:del-products' product.pk%}"style="color:white;">Delete</a></button>
+			  {%endif%}
+			</div>
+			<!-- <a href="{{product.product_image.url}}" class="btn btn-xs btn-default">Full Image here</a>  -->
+			<!-- {%if request.user == product.user%}
+			<a href="{% url 'blogs:products' product.pk%}"class="btn btn-xs btn-primary">Edit</a><a href="{% url 'blogs:del-products' product.pk%}">Delete</a>
+			{%endif%} -->
 			{%else%}
 			<p class="category">Category: {{product.category}}</p>
 			<p class="price">Price: #{{product.product_price}}</p>
@@ -49,8 +68,9 @@
 		{%endfor%}
 
 	</div>
+</div>
 
-	<div class="pagination"> <span class="step-links"> 
+	<!-- <div class="pagination"> <span class="step-links"> 
 			{% if page_obj.has_previous %}
 			<a href="?page={{ page_obj.previous_page_number }}"><span class="	glyphicon glyphicon-arrow-left"></span></a>
 			{% endif %}
@@ -60,7 +80,7 @@
 			{% endif %} </span> 
 		</div>
 	
-</div>
+</div> -->
 
 
 <!-- {{product.user}}<br><hr>

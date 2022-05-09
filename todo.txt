@@ -1,0 +1,4 @@
+1: create an update view for the sell-form
+2:add images to the help section
+3:possibly allow reply comment post images also just as the comment
+4:Allow user post muiltiple images in the market details
